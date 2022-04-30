@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System;
 
 public class GeoFigManager : MonoBehaviour
 {
@@ -37,11 +39,17 @@ public class GeoFigManager : MonoBehaviour
     public List<Transform> loadedLevels;
     public List<GameObject> completedTargets;
 
+    [Header("RESULT VARIABLES")]
+    public GameObject resultPanel;
+    public Text scoreText;
+    public Text timeText;
 
     // Start is called before the first frame update
     void Start()
     {
         if (sharedInstance == null) sharedInstance = this;
+
+        dificulty = DificultyManager.GetDificulty();
     }
 
     // Update is called once per frame
@@ -105,6 +113,7 @@ public class GeoFigManager : MonoBehaviour
     public void AddLevelScore()
     {
         currentScore += levelScores[currentThreshold];
+        currentThreshold = 0;
     }
 
     public void AddDificultyScore()
@@ -123,7 +132,10 @@ public class GeoFigManager : MonoBehaviour
             }
 
             //Add time to total time
-            timeSpend += Time.time - startTimer;
+            if (currentLvl != 0)
+            {
+                timeSpend += Time.time - startTimer;
+            }
 
             //Change Start Timer
             startTimer = Time.time;
@@ -143,6 +155,34 @@ public class GeoFigManager : MonoBehaviour
             AddDificultyScore();
             playing = false;
             Debug.Log("Niveles Finalizados");
+            ActivateResults();
         }
     }
+
+    #region Results
+
+    public void ActivateResults()
+    {
+        resultPanel.SetActive(true);
+        scoreText.text = currentScore.ToString();
+        TimeSpan time = TimeSpan.FromSeconds(timeSpend);
+        timeText.text = string.Format("{0:00}:{1:00}", time.TotalMinutes, time.Seconds);
+    }
+    
+    public void ReplayDificulty()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GeoFig_Level");
+    }
+
+    public void NextDificulty()
+    {
+        DificultyManager.NextDificulty();
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GeoFig_Level");
+    }
+    
+    public void ReturnToMenu()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu_Options");
+    }
+    #endregion
 }

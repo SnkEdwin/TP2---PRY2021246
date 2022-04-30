@@ -10,9 +10,19 @@ public static class DificultyManager
 
     public static void SetDificulty(int n)
     {
+        if (n > 2)
+        {
+            n = 2;
+        }
         dificulty = n;
     }
-
+    public static void NextDificulty()
+    {
+        if (dificulty < 2)
+        {
+            dificulty++;
+        }
+    }
     public static int GetDificulty()
     {
         return dificulty;

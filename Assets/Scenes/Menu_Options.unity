@@ -462,8 +462,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2078522379}
-        m_TargetAssemblyTypeName: ChangeSceneWithButton, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_TargetAssemblyTypeName: SceneLoaderManager, Assembly-CSharp
+        m_MethodName: LoadNewScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -804,8 +804,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2078522379}
-        m_TargetAssemblyTypeName: ChangeSceneWithButton, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_TargetAssemblyTypeName: SceneLoaderManager, Assembly-CSharp
+        m_MethodName: LoadNewScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1367,8 +1367,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2078522379}
-        m_TargetAssemblyTypeName: ChangeSceneWithButton, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_TargetAssemblyTypeName: SceneLoaderManager, Assembly-CSharp
+        m_MethodName: LoadNewScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2006,7 +2006,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2078522378}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88e84b78cc3db6c4ea5f6343eba9c778, type: 3}
+  m_Script: {fileID: 11500000, guid: 1680aae8e26fb3848958cb7e653fc930, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &2078522380
