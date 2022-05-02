@@ -21,12 +21,17 @@ public class GeoFigManager : MonoBehaviour
     public int mistakes;
 
     [Header("SCORE VARIABLES")]
+    public Text currentScoreText;
     public int currentScore = 0;
-    private float startTimer;
     public List<int> thresholds;
     private int currentThreshold = 0;
     public List<int> levelScores;
     public List<int> dificultyBonus;
+
+    [Header("TIME VARIABLES")]
+    public Text currentTimeText;
+    private float dificultyStartTimer;
+    private float levelStartTimer;
 
 
     [Header("LEVELS GROUP")]
@@ -64,11 +69,15 @@ public class GeoFigManager : MonoBehaviour
                 //Check time Thresholds
                 if (currentThreshold < thresholds.Count - 1)
                 {
-                    if (Time.time - startTimer >= thresholds[currentThreshold])
+                    if (Time.time - levelStartTimer >= thresholds[currentThreshold])
                     {
                         currentThreshold++;
                     }
                 }
+
+                //Change time
+                TimeSpan time = TimeSpan.FromSeconds(Time.time - dificultyStartTimer);
+                currentTimeText.text = string.Format("{0:00}:{1:00}", time.TotalMinutes, time.Seconds);
             }
         }
     }
@@ -88,6 +97,9 @@ public class GeoFigManager : MonoBehaviour
                 loadedLevels = hard;
                 break;
         }
+
+        //Asign Timer
+        dificultyStartTimer = Time.time;
 
         //Load First Level
         NextLevel();
@@ -113,6 +125,7 @@ public class GeoFigManager : MonoBehaviour
     public void AddLevelScore()
     {
         currentScore += levelScores[currentThreshold];
+        currentScoreText.text = currentScore.ToString();
         currentThreshold = 0;
     }
 
@@ -134,11 +147,11 @@ public class GeoFigManager : MonoBehaviour
             //Add time to total time
             if (currentLvl != 0)
             {
-                timeSpend += Time.time - startTimer;
+                timeSpend += Time.time - levelStartTimer;
             }
 
             //Change Start Timer
-            startTimer = Time.time;
+            levelStartTimer = Time.time;
 
             //Change Level
             loadedLevels[currentLvl].gameObject.SetActive(false);
@@ -149,7 +162,7 @@ public class GeoFigManager : MonoBehaviour
         else
         {
             //Add time to total time
-            timeSpend += Time.time - startTimer;
+            timeSpend += Time.time - levelStartTimer;
 
             AddLevelScore();
             AddDificultyScore();

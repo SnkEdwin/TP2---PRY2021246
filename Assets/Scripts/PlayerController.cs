@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public float runningSpeed = 2f;
     Vector3 startPosition;
     private Rigidbody2D rigidBody;
-    //Ahora para agregarle animación al personaje dependiendo de su estado
+    //Ahora para agregarle animaciï¿½n al personaje dependiendo de su estado
     Animator animator;
     //private  TimeController timeController;
     //Para el sonido
@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void StartGame()
-    {   //Cuando empezamos a jugar el jugador no estará en el suelo
+    {   //Cuando empezamos a jugar el jugador no estarï¿½ en el suelo
         animator.SetBool(STATE_ON_THE_GROUND, false);
         animator.SetBool(STATE_IS_WALKING, false); 
         this.transform.position = startPosition;
@@ -76,14 +76,14 @@ public class PlayerController : MonoBehaviour
             animator.SetBool(STATE_IS_WALKING, true);
         }
         else
-        {   //Poner en estado off la animación de caminar
+        {   //Poner en estado off la animaciï¿½n de caminar
             animator.SetBool(STATE_IS_WALKING, false);
-            //Evitar deslizamiento cuando se desactive la fricción  
+            //Evitar deslizamiento cuando se desactive la fricciï¿½n  
             rigidBody.velocity = new Vector2(runningSpeed * 0, rigidBody.velocity.y);
         }
     }
 
-    // Es un método que si o si se va a utilizar
+    // Es un mï¿½todo que si o si se va a utilizar
     void Jump()
     {
         animator.SetBool(STATE_IS_WALKING, false);
@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
     // Para esto debo crear un nuevo Layer llamado Ground para todas las plataformas
     //Esto nos va a servir para que el salto no se haga consecutivo
     bool IsTouchingTheGround()
-    {   //this.position = desde la posición desde donde hasta donde quiero trazar el rayo (down) 
+    {   //this.position = desde la posiciï¿½n desde donde hasta donde quiero trazar el rayo (down) 
         if (Physics2D.Raycast(this.transform.position, Vector2.down, distanceRay,groundMask))
         {       
             //GameManager.sharedInstance.currentGameState = GameManager.GameState.inGame;
@@ -117,8 +117,8 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.tag == "Incorrect")
         {
-            print("Colision - Disminuye el tiempo");
-            TimeController.timeController.disminucion(5);
+            //print("Colision - Disminuye el tiempo");
+            //TimeController.timeController.disminucion(5);
         }
         else if (collision.CompareTag("Correct"))
         {   
@@ -129,12 +129,16 @@ public class PlayerController : MonoBehaviour
             else if (Application.loadedLevelName == "Level_5") SceneManager.LoadScene("Level_6", LoadSceneMode.Single);
             else if (Application.loadedLevelName == "Level_6") SceneManager.LoadScene("Level_7", LoadSceneMode.Single);
             else if (Application.loadedLevelName == "Level_7") SceneManager.LoadScene("Level_8", LoadSceneMode.Single);
+            TimeController.timeController.IsGameOver();
+            TimeController.timeController.IsOver();
+            Puntaje.puntaje.IsOver();
+            CoinContController.coinContController.IsOver();
             print("Colision - Gano el juego");
         }
         else if (collision.CompareTag("Coin"))
         {
-            print("Colision - Aumenta el tiempo");
-            TimeController.timeController.restante += 10;
+            //print("Colision - Aumenta el tiempo");
+            //TimeController.timeController.restante += 10;
         }
     }
 

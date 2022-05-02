@@ -14,6 +14,7 @@ public class CoinController : MonoBehaviour
             puntaje.SumarPuntos(cantidadPuntos);
             Destroy(gameObject);
             CoinContController.coinContController.cont += 1;
+            CoinContController.coinContController.saveData(CoinContController.coinContController.cont);
         }
     }
 }

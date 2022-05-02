@@ -9,10 +9,19 @@ public class CoinContController : MonoBehaviour
     [SerializeField]  Text contador;
     private bool enMarcha;
     public static CoinContController coinContController;
+    private string coinPrefsName = "Coin";
+    private bool start = true;
     private void Awake()
     {
+        if (start)
+        {
+            start = false;
+        }
+        else
+        {
+            loadData();
+        }
         if (coinContController == null) coinContController = this;
-        cont = 0;
         enMarcha = true;
     }
     void Update()
@@ -21,5 +30,26 @@ public class CoinContController : MonoBehaviour
         {
            contador.text = cont.ToString();
         }
+    }
+    
+    public void saveData(float _cont)
+    {
+        this.cont = _cont;
+        PlayerPrefs.SetFloat(coinPrefsName,cont);
+    }
+    
+    public  void IsOver()
+    {
+        cont = 0;
+    }
+
+    private void loadData()
+    {
+        cont = PlayerPrefs.GetFloat(coinPrefsName, 0);
+    }
+    private void OnApplicationQuit()
+    {
+        cont = 0;
+        PlayerPrefs.SetFloat(coinPrefsName,cont);
     }
 }
