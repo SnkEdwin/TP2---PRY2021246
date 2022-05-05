@@ -26,7 +26,20 @@ public class UIManager : MonoBehaviour
     }
     public void GoMainMenu(string loadScene)
     {
+        
         SceneManager.LoadScene(loadScene);
+        TimeController.timeController.IsGameOver();
+        TimeController.timeController.IsOver();
+        CoinContController.coinContController.IsOver();
+        CoinContController.coinContController.IsGameOver();
+        
+        ContController.setContFailure(0);
+        ContController.setContSuccess(0);
+        print("contFailure: "+ContController.getContFailure());
+        print("contSuccess: "+ContController.getContSuccess());
+        Puntaje.puntaje.IsOver();
+        Puntaje.puntaje.IsGameOver();
+        
     }
     public void QuitGame()
     {

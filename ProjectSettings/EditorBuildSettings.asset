@@ -9,29 +9,68 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu_Options.unity
     guid: 4ae9582e71bf20c4793bf0372810e78c
   - enabled: 1
-    path: Assets/Scenes/Level_1.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/Realizados-Daniel/Sumas_y_restas_dificil_1.unity
+    guid: 8b5df925aca398e428f067caca683798
   - enabled: 1
-    path: Assets/Scenes/Level_2.unity
-    guid: 697a798abc5d2164fadd66a11cee1f81
+    path: Assets/Scenes/Realizados-Daniel/Sumas_y_restas_dificil_2.unity
+    guid: 2417248b76771d248810d938f20850d6
   - enabled: 1
-    path: Assets/Scenes/Level_3.unity
-    guid: 118a0ad6232ac04439e23660dc14b645
+    path: Assets/Scenes/Realizados-Daniel/Sumas_y_restas_dificil_3.unity
+    guid: fbdacc96e8f4f7a4b955f7f694b2110c
   - enabled: 1
-    path: Assets/Scenes/Level_4.unity
+    path: Assets/Scenes/Realizados-Daniel/Sumas_y_restas_dificil_4.unity
+    guid: 8d0132b56e3354e44819c0c7ba612b6e
+  - enabled: 1
+    path: Assets/Scenes/Realizados-Daniel/Sumas_y_restas_dificil_5.unity
+    guid: 8bfdd848a4317db46bd6e76a23d583a0
+  - enabled: 1
+    path: Assets/Scenes/Realizados-Daniel/Sumas_y_restas_facil_1.unity
     guid: 4b4b19c557de1a64fbe08c3a89413055
   - enabled: 1
-    path: Assets/Scenes/Level_5.unity
+    path: Assets/Scenes/Realizados-Daniel/Sumas_y_restas_facil_2.unity
+    guid: 4959dcad1d72ede49b5ef8faf8fa5837
+  - enabled: 1
+    path: Assets/Scenes/Realizados-Daniel/Sumas_y_restas_facil_3.unity
     guid: 915966bdbac914b4b9ecc3dd64d370be
   - enabled: 1
+    path: Assets/Scenes/Realizados-Daniel/Sumas_y_restas_facil_4.unity
+    guid: b71a9a3364e1a3d4d803662fa64ac85b
+  - enabled: 1
+    path: Assets/Scenes/Realizados-Daniel/Sumas_y_restas_facil_5.unity
+    guid: f9f181ae8f48cb34c80feb1ff3c40e88
+  - enabled: 1
+    path: Assets/Scenes/Realizados-Daniel/Sumas_y_restas_medio_1.unity
+    guid: 8e74c9125f9158743884d658f234646a
+  - enabled: 1
+    path: Assets/Scenes/Realizados-Daniel/Sumas_y_restas_medio_2.unity
+    guid: 4ad0432c8f7622e48b38f8541e6598ee
+  - enabled: 1
+    path: Assets/Scenes/Realizados-Daniel/Sumas_y_restas_medio_3.unity
+    guid: 83555e16c99dd6748ac09d282683e643
+  - enabled: 1
+    path: Assets/Scenes/Realizados-Daniel/Sumas_y_restas_medio_4.unity
+    guid: e399c02c0ff050642b397e112e4f1792
+  - enabled: 1
+    path: Assets/Scenes/Realizados-Daniel/Sumas_y_restas_medio_5.unity
+    guid: b91436cc4961f2849a0d502023010f78
+  - enabled: 0
+    path: Assets/Scenes/Level_1.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 0
+    path: Assets/Scenes/Level_2.unity
+    guid: 697a798abc5d2164fadd66a11cee1f81
+  - enabled: 0
+    path: Assets/Scenes/Level_3.unity
+    guid: 118a0ad6232ac04439e23660dc14b645
+  - enabled: 0
     path: Assets/Scenes/Level_6.unity
     guid: 69bb224d962ba12459426792c5501a3a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Level_7.unity
     guid: a40045e8e7e7eb845a0ae66c8654c0c1
   - enabled: 1
-    path: Assets/Scenes/Level_8.unity
-    guid: 4959dcad1d72ede49b5ef8faf8fa5837
+    path: Assets/Scenes/GeoFig/GeoFig_Level.unity
+    guid: 54403bcd75337324ca65800b426f27d6
   - enabled: 1
     path: Assets/Scenes/Level_Difficult_Sucesiones.unity
     guid: 1e90da46df50d054d9347d408246b00c
@@ -47,7 +86,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Register.unity
     guid: a0291b1daadb8964dbe6bc75554ed71f
-  - enabled: 1
-    path: Assets/Scenes/GeoFig/GeoFig_Level.unity
-    guid: 54403bcd75337324ca65800b426f27d6
   m_configObjects: {}

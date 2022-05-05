@@ -8,22 +8,16 @@ public class Puntaje : MonoBehaviour
 {
     public static Puntaje puntaje;
     private float puntos;
+    private bool enMarcha;
     private TextMeshProUGUI textMeshPro;
     private string pointsPrefsName = "Point";
-    private bool start = true;
+    
     private void Awake()
     {
-        
-        if (start)
-        {
-            start = false;
-        }
-        else
-        {
-            loadData();
-        }
-        
-        
+
+        loadData();
+        if (puntaje == null) puntaje = this;
+        enMarcha = true;
     }
 
     private void Start()
@@ -34,8 +28,11 @@ public class Puntaje : MonoBehaviour
     
     private void Update()
     {
-        //puntos += Time.deltaTime;
-        textMeshPro.text = puntos.ToString("0");
+        if (enMarcha)
+        {
+            textMeshPro.text = puntos.ToString("0");
+        }
+
     }
 
     public void SumarPuntos(float puntosEntrada)
@@ -50,10 +47,14 @@ public class Puntaje : MonoBehaviour
 
     public void IsOver()
     {
+        
         puntos = 0;
-        PlayerPrefs.DeleteKey(pointsPrefsName);
+        PlayerPrefs.SetFloat(pointsPrefsName,puntos);
     }
-    
+    public void IsGameOver()
+    {
+        enMarcha = false;
+    }
     private void saveData()
     {
         PlayerPrefs.SetFloat(pointsPrefsName,puntos);

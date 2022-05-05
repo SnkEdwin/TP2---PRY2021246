@@ -54,6 +54,7 @@ public class TimeController : MonoBehaviour
     }
     public  void IsOver()
     {
+        
         restante = 0;
     }
 

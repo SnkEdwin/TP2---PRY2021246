@@ -10,17 +10,11 @@ public class CoinContController : MonoBehaviour
     private bool enMarcha;
     public static CoinContController coinContController;
     private string coinPrefsName = "Coin";
-    private bool start = true;
+    
     private void Awake()
     {
-        if (start)
-        {
-            start = false;
-        }
-        else
-        {
-            loadData();
-        }
+
+        loadData();
         if (coinContController == null) coinContController = this;
         enMarcha = true;
     }
@@ -40,7 +34,13 @@ public class CoinContController : MonoBehaviour
     
     public  void IsOver()
     {
+        
         cont = 0;
+        PlayerPrefs.SetFloat(coinPrefsName,cont);
+    }
+    public void IsGameOver()
+    {
+        enMarcha = false;
     }
 
     private void loadData()
