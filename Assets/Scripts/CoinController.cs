@@ -10,7 +10,7 @@ public class CoinController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
-        {   
+        {
             puntaje.SumarPuntos(cantidadPuntos);
             Destroy(gameObject);
             CoinContController.coinContController.cont += 1;

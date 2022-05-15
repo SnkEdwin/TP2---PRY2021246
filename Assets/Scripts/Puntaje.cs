@@ -7,7 +7,7 @@ using UnityEngine;
 public class Puntaje : MonoBehaviour
 {
     public static Puntaje puntaje;
-    private float puntos;
+    public float puntos;
     private bool enMarcha;
     private TextMeshProUGUI textMeshPro;
     private string pointsPrefsName = "Point";

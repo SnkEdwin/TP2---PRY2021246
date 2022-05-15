@@ -37,16 +37,27 @@ public class PlayerController : MonoBehaviour
     private const string STATE_IS_WALKING = "IsWalking";
     
     public LayerMask groundMask;
-    
-    
+
+    private bool isSucesion;
+    private bool isSumasRestas;
     [SerializeField] public bool comenzo;
     //private string comenzoPrefsName = "comenzó";
+    [Header("RESULT VARIABLES")]
+    public GameObject resultPanel;
+    public Text scoreText;
+    public Text timeText;
+    
+    [Header("JOYSTICK AND JUMP")]
+    public GameObject actJoyStick;
+    public GameObject actJump;
+
+    
     void Awake()
     {
         
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        loadData();
+        loadDataContadores();
         print("contadorFallido: " + contadorFallido);
         print("contadorAciertos: " + contadorAciertos);
     }
@@ -71,6 +82,10 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Inicia el juego
+    /// 
+    /// </summary>
     public void StartGame()
     {   //Cuando empezamos a jugar el jugador no estar� en el suelo
         animator.SetBool(STATE_ON_THE_GROUND, false);
@@ -80,33 +95,22 @@ public class PlayerController : MonoBehaviour
         this.rigidBody.velocity = Vector2.zero;
     }
     
-   //public void saveData(float _contadorFallidos,float _contadorAciertos)
-   //{
-   //    contadorFallido = _contadorFallidos;
-   //    contadorAciertos = _contadorAciertos;
-   //    PlayerPrefs.SetFloat(counterFailurePrefsName,contadorFallido);
-   //    PlayerPrefs.SetFloat(counterSuccessPrefsName,contadorAciertos);
-   //    //PlayerPrefs.SetString(comenzoPrefsName,comenzo.ToString());
-   //}
+
     
     
-    private void loadData()
+    private void loadDataContadores()
     {
         contadorFallido = ContController.getContFailure();
         contadorAciertos = ContController.getContSuccess();
-        //comenzo = Convert.ToBoolean(PlayerPrefs.GetString(comenzoPrefsName, "True"));
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetButtonDown("Jump"))
-        //{   
-//
-        //    Jump();
-        //}
+       
         animator.SetBool(STATE_ON_THE_GROUND, IsTouchingTheGround());
-        //Debug.DrawRay(this.transform.position, Vector2.down * distanceRay, Color.red);
+
     }
 
     private void FixedUpdate()
@@ -217,6 +221,7 @@ public class PlayerController : MonoBehaviour
             return false;
         }
     }
+
     
     private void OnApplicationQuit()
     {
@@ -239,15 +244,144 @@ public class PlayerController : MonoBehaviour
             contadorAciertos += 1;
             ContController.setContSuccess(contadorAciertos);
             print("contadorAciertos: " + ContController.getContSuccess());
-            
-            // FACIL NIVEL 1
+            // FACIL NIVEL 1 sucesiones
+            if (Application.loadedLevelName == "Sucesiones_Facil_1")
+            {
+                //isSucesion = true;
+                SceneManager.LoadScene("Sucesiones_Facil_2", LoadSceneMode.Single);
+            } 
+            else if (Application.loadedLevelName == "Sucesiones_Facil_2") SceneManager.LoadScene("Sucesiones_Facil_3", LoadSceneMode.Single);
+            else if (Application.loadedLevelName == "Sucesiones_Facil_3") SceneManager.LoadScene("Sucesiones_Facil_4", LoadSceneMode.Single);
+            else if (Application.loadedLevelName == "Sucesiones_Facil_4") SceneManager.LoadScene("Sucesiones_Facil_5", LoadSceneMode.Single);
+            else if (Application.loadedLevelName == "Sucesiones_Facil_5") //MEDIO NIVEL 1
+            {
+                actJoyStick.SetActive(false);
+                actJump.SetActive(false);
+                resultPanel.SetActive(true);
+                loadDataContadores();
+                scoreText.text = Puntaje.puntaje.puntos.ToString();
+               
+                timeText.text = TimeController.timeController.minSeg;;
+                
+                
+                // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
+                TimeController.timeController.IsGameOver();
+                Puntaje.puntaje.IsGameOver();
+                CoinContController.coinContController.IsGameOver();
+                TimeController.timeController.IsOver();
+                Puntaje.puntaje.IsOver();
+                CoinContController.coinContController.IsOver();
+                
+                
+                contadorTotal = contadorAciertos + contadorFallido;
+                precision = (contadorAciertos / contadorTotal);
+                
+                Debug.Log("Colision - Gano el juego");
+                Debug.Log("N° Total Incorrectas: "+ContController.getContFailure());
+                Debug.Log("N° de Precisión del nivel: "+decimal.Round((decimal)precision*100,2));
+                ContController.setContSuccess(0);
+                ContController.setContFailure(0);
+                
+            }
+            if (Application.loadedLevelName == "Sucesiones_Medio_1") SceneManager.LoadScene("Sucesiones_Medio_2", LoadSceneMode.Single);
+            else if (Application.loadedLevelName == "Sucesiones_Medio_2") SceneManager.LoadScene("Sucesiones_Medio_3", LoadSceneMode.Single);
+            else if (Application.loadedLevelName == "Sucesiones_Medio_3") SceneManager.LoadScene("Sucesiones_Medio_4", LoadSceneMode.Single);
+            else if (Application.loadedLevelName == "Sucesiones_Medio_4") SceneManager.LoadScene("Sucesiones_Medio_5", LoadSceneMode.Single);
+            else if (Application.loadedLevelName == "Sucesiones_Medio_5")  // DIFICIL NIVEL 1
+            {
+                actJoyStick.SetActive(false);
+                actJump.SetActive(false);
+                resultPanel.SetActive(true);
+                loadDataContadores();
+                scoreText.text = Puntaje.puntaje.puntos.ToString();
+                
+                timeText.text = TimeController.timeController.minSeg;;
+                
+                
+                // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
+                TimeController.timeController.IsGameOver();
+                Puntaje.puntaje.IsGameOver();
+                CoinContController.coinContController.IsGameOver();
+                TimeController.timeController.IsOver();
+                Puntaje.puntaje.IsOver();
+                CoinContController.coinContController.IsOver();
+                
+                
+                contadorTotal = contadorAciertos + contadorFallido;
+                precision = (contadorAciertos / contadorTotal);
+                
+                Debug.Log("Colision - Gano el juego");
+                Debug.Log("N° Total Incorrectas: "+ContController.getContFailure());
+                Debug.Log("N° de Precisión del nivel: "+decimal.Round((decimal)precision*100,2));
+                ContController.setContSuccess(0);
+                ContController.setContFailure(0);
+            }
+            else if (Application.loadedLevelName == "Sucesiones_Dificil_1") SceneManager.LoadScene("Sucesiones_Dificil_2", LoadSceneMode.Single);
+            else if (Application.loadedLevelName == "Sucesiones_Dificil_2") SceneManager.LoadScene("Sucesiones_Dificil_3", LoadSceneMode.Single);
+            else if (Application.loadedLevelName == "Sucesiones_Dificil_3") SceneManager.LoadScene("Sucesiones_Dificil_4", LoadSceneMode.Single);
+            else if (Application.loadedLevelName == "Sucesiones_Dificil_4") SceneManager.LoadScene("Sucesiones_Dificil_5", LoadSceneMode.Single);
+            else if (Application.loadedLevelName == "Sucesiones_Dificil_5")
+            {
+                actJoyStick.SetActive(false);
+                actJump.SetActive(false);
+                resultPanel.SetActive(true);
+                loadDataContadores();
+                scoreText.text = Puntaje.puntaje.puntos.ToString();
+                
+                timeText.text = TimeController.timeController.minSeg;
+                
+                
+                // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
+                TimeController.timeController.IsGameOver();
+                Puntaje.puntaje.IsGameOver();
+                CoinContController.coinContController.IsGameOver();
+                TimeController.timeController.IsOver();
+                Puntaje.puntaje.IsOver();
+                CoinContController.coinContController.IsOver();
+                
+                
+                contadorTotal = contadorAciertos + contadorFallido;
+                precision = (contadorAciertos / contadorTotal);
+                
+                Debug.Log("Colision - Gano el juego");
+                Debug.Log("N° Total Incorrectas: "+ContController.getContFailure());
+                Debug.Log("N° de Precisión del nivel: "+decimal.Round((decimal)precision*100,2));
+                ContController.setContSuccess(0);
+                ContController.setContFailure(0);
+            }
+            // FACIL NIVEL 1 sumas y restas
             if (Application.loadedLevelName == "Sumas_y_restas_facil_1") SceneManager.LoadScene("Sumas_y_restas_facil_2", LoadSceneMode.Single); 
             else if (Application.loadedLevelName == "Sumas_y_restas_facil_2") SceneManager.LoadScene("Sumas_y_restas_facil_3", LoadSceneMode.Single);
             else if (Application.loadedLevelName == "Sumas_y_restas_facil_3") SceneManager.LoadScene("Sumas_y_restas_facil_4", LoadSceneMode.Single);
             else if (Application.loadedLevelName == "Sumas_y_restas_facil_4") SceneManager.LoadScene("Sumas_y_restas_facil_5", LoadSceneMode.Single);
             else if (Application.loadedLevelName == "Sumas_y_restas_facil_5") //MEDIO NIVEL 1
             {
-                SceneManager.LoadScene("Sumas_y_restas_medio_1", LoadSceneMode.Single);
+                actJoyStick.SetActive(false);
+                actJump.SetActive(false);
+                resultPanel.SetActive(true);
+                loadDataContadores();
+                scoreText.text = Puntaje.puntaje.puntos.ToString();
+               
+                timeText.text = TimeController.timeController.minSeg;;
+                
+                
+                // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
+                TimeController.timeController.IsGameOver();
+                Puntaje.puntaje.IsGameOver();
+                CoinContController.coinContController.IsGameOver();
+                TimeController.timeController.IsOver();
+                Puntaje.puntaje.IsOver();
+                CoinContController.coinContController.IsOver();
+                
+                
+                contadorTotal = contadorAciertos + contadorFallido;
+                precision = (contadorAciertos / contadorTotal);
+                
+                Debug.Log("Colision - Gano el juego");
+                Debug.Log("N° Total Incorrectas: "+ContController.getContFailure());
+                Debug.Log("N° de Precisión del nivel: "+decimal.Round((decimal)precision*100,2));
+                ContController.setContSuccess(0);
+                ContController.setContFailure(0);
             }
             else if (Application.loadedLevelName == "Sumas_y_restas_medio_1") SceneManager.LoadScene("Sumas_y_restas_medio_2", LoadSceneMode.Single);
             else if (Application.loadedLevelName == "Sumas_y_restas_medio_2") SceneManager.LoadScene("Sumas_y_restas_medio_3", LoadSceneMode.Single);
@@ -255,26 +389,65 @@ public class PlayerController : MonoBehaviour
             else if (Application.loadedLevelName == "Sumas_y_restas_medio_4") SceneManager.LoadScene("Sumas_y_restas_medio_5", LoadSceneMode.Single);
             else if (Application.loadedLevelName == "Sumas_y_restas_medio_5")  // DIFICIL NIVEL 1
             {
-                SceneManager.LoadScene("Sumas_y_restas_dificil_1", LoadSceneMode.Single); 
+                actJoyStick.SetActive(false);
+                actJump.SetActive(false);
+                resultPanel.SetActive(true);
+                loadDataContadores();
+                scoreText.text = Puntaje.puntaje.puntos.ToString();
+               
+                timeText.text = TimeController.timeController.minSeg;;
+                
+                
+                // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
+                TimeController.timeController.IsGameOver();
+                Puntaje.puntaje.IsGameOver();
+                CoinContController.coinContController.IsGameOver();
+                TimeController.timeController.IsOver();
+                Puntaje.puntaje.IsOver();
+                CoinContController.coinContController.IsOver();
+                
+                
+                contadorTotal = contadorAciertos + contadorFallido;
+                precision = (contadorAciertos / contadorTotal);
+                
+                Debug.Log("Colision - Gano el juego");
+                Debug.Log("N° Total Incorrectas: "+ContController.getContFailure());
+                Debug.Log("N° de Precisión del nivel: "+decimal.Round((decimal)precision*100,2));
+                ContController.setContSuccess(0);
+                ContController.setContFailure(0);
             }
             else if (Application.loadedLevelName == "Sumas_y_restas_dificil_1") SceneManager.LoadScene("Sumas_y_restas_dificil_2", LoadSceneMode.Single);
             else if (Application.loadedLevelName == "Sumas_y_restas_dificil_2") SceneManager.LoadScene("Sumas_y_restas_dificil_3", LoadSceneMode.Single);
             else if (Application.loadedLevelName == "Sumas_y_restas_dificil_3") SceneManager.LoadScene("Sumas_y_restas_dificil_4", LoadSceneMode.Single);
             else if (Application.loadedLevelName == "Sumas_y_restas_dificil_4") SceneManager.LoadScene("Sumas_y_restas_dificil_5", LoadSceneMode.Single);
-            else
+            else if(Application.loadedLevelName == "Sumas_y_restas_dificil_5")
             {
-                loadData();
+                actJoyStick.SetActive(false);
+                actJump.SetActive(false);
+                resultPanel.SetActive(true);
+                loadDataContadores();
+                scoreText.text = Puntaje.puntaje.puntos.ToString();
+               
+                timeText.text = TimeController.timeController.minSeg;;
+                
+                
+                // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
                 TimeController.timeController.IsGameOver();
                 Puntaje.puntaje.IsGameOver();
                 CoinContController.coinContController.IsGameOver();
-                //TimeController.timeController.IsOver();
-                //Puntaje.puntaje.IsOver();
-                //CoinContController.coinContController.IsOver();
+                TimeController.timeController.IsOver();
+                Puntaje.puntaje.IsOver();
+                CoinContController.coinContController.IsOver();
+                
+                
                 contadorTotal = contadorAciertos + contadorFallido;
                 precision = (contadorAciertos / contadorTotal);
+                
                 Debug.Log("Colision - Gano el juego");
                 Debug.Log("N° Total Incorrectas: "+ContController.getContFailure());
                 Debug.Log("N° de Precisión del nivel: "+decimal.Round((decimal)precision*100,2));
+                ContController.setContSuccess(0);
+                ContController.setContFailure(0);
             }
            
             
@@ -282,7 +455,7 @@ public class PlayerController : MonoBehaviour
         else if (collision.CompareTag("Block"))
         {
             
-            transform.position += new Vector3(0, 0,0) * 0 * 0;
+            //transform.position += new Vector3(0, 0,0) * 0 * 0;
         }
     }
 
