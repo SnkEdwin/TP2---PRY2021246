@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Se incializa la aplicación y luego se crea los estados del juego
+/// Se asigna al controlador del jugador a su objeto del juego
+/// Después, una vez cargado se maneja los estados dependiendo del contexto en el que está
+/// </summary>
 public class GameManager : MonoBehaviour
 {   //Poner los estados del juego
 

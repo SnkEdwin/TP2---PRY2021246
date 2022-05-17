@@ -5,6 +5,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
+/// <summary>
+/// Este es controlador del jugador, aquí se encuentra las funciones de movimiento, colisiones con otros objetos,
+/// registro de aciertos y fallidos, como su precisión. Así también, en las colisiones detecta cuando entra contacto con el bloque correcto e incorrecto
+/// y el pase a otros niveles del minijuego de sucesiones; y sumas y restas
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
     
@@ -67,27 +73,14 @@ public class PlayerController : MonoBehaviour
     {
       
         startPosition = this.transform.position;
-       //if (comenzo)
-       //{
-       //    
-       //    //comenzo=false;
-       //    //contadorAciertos = 0;
-       //    //contadorFallido = 0;
-       //    //layerPrefs.SetFloat(counterFailurePrefsName,contadorFallido);
-       //    //layerPrefs.SetFloat(counterSuccessPrefsName,contadorAciertos);
-       //    
-       //}
-        
-        //timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
-
+       
     }
 
     /// <summary>
-    /// Inicia el juego
-    /// 
+    /// Inicia el minujuego seleccionado
     /// </summary>
     public void StartGame()
-    {   //Cuando empezamos a jugar el jugador no estar� en el suelo
+    {   //Cuando empezamos a jugar el jugador no estará en el suelo
         animator.SetBool(STATE_ON_THE_GROUND, false);
         animator.SetBool(STATE_IS_WALKING, false); 
         this.transform.position = startPosition;
@@ -97,7 +90,9 @@ public class PlayerController : MonoBehaviour
     
 
     
-    
+    /// <summary>
+    /// Se obtiene la información de los contadores de aciertos y fallidos
+    /// </summary>
     private void loadDataContadores()
     {
         contadorFallido = ContController.getContFailure();
@@ -113,6 +108,10 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    
+    /// <summary>
+    /// En esta función, se detecta los movimientos hechos en el joystick y el personaje deberá moverse para el lado correcto
+    /// </summary>
     private void FixedUpdate()
     {
         
@@ -160,39 +159,13 @@ public class PlayerController : MonoBehaviour
                 break;
         }
         
-        //Debug.Log("joystick"+joystick.Horizontal);
-
-        
-        //if (expr)
-        //{
-        //    animator.SetBool(STATE_IS_WALKING, false);
-        //}
-        //
-        //if (Input.GetKey(KeyCode.RightArrow))
-        //{   //Para la direccion de la animacion
-        //    rigidBody.GetComponent<SpriteRenderer>().flipX = false;
-        //    //Para la velocidad de movimiento en X
-        //    rigidBody.velocity = new Vector2(runningSpeed, rigidBody.velocity.y);
-        //    //Para activar el estado STATE_IS_WALKING
-        //    animator.SetBool(STATE_IS_WALKING, true);
-//
-        //}
-        //else if (Input.GetKey(KeyCode.LeftArrow))
-        //{   rigidBody.GetComponent<SpriteRenderer>().flipX = true;
-        //    rigidBody.velocity = new Vector2(-runningSpeed, rigidBody.velocity.y);
-        //    animator.SetBool(STATE_IS_WALKING, true);
-        //}
-        //else
-        //{   //Poner en estado off la animaci�n de caminar
-        //    animator.SetBool(STATE_IS_WALKING, false);
-        //    //Evitar deslizamiento cuando se desactive la fricci�n  
-        //    rigidBody.velocity = new Vector2(runningSpeed * 0, rigidBody.velocity.y);
-        //}
-
-
+       
     }
 
-    // Es un m�todo que si o si se va a utilizar
+    /// <summary>
+    /// Es un método que si o si se va a utilizar, se encarga de controlar los saltos.
+    /// Esta asignado al botón de la interfaz del juego
+    /// </summary>
     public void Jump()
     {
         animator.SetBool(STATE_IS_WALKING, false);
@@ -205,8 +178,12 @@ public class PlayerController : MonoBehaviour
 
     
     }
-    // Para esto debo crear un nuevo Layer llamado Ground para todas las plataformas
-    //Esto nos va a servir para que el salto no se haga consecutivo
+    
+    /// <summary>
+    /// Para esto debo crear un nuevo Layer llamado Ground para todas las plataformas
+    /// Esto nos va a servir para que el salto no se haga consecutivo
+    /// </summary>
+    /// <returns></returns>
     bool IsTouchingTheGround()
     {   //this.position = desde la posici�n desde donde hasta donde quiero trazar el rayo (down) 
         if (Physics2D.Raycast(this.transform.position, Vector2.down, distanceRay,groundMask))
@@ -222,7 +199,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
+    /// <summary>
+    /// Se resetea los valores de aciertos y fallidos, al salir de la aplicación
+    /// </summary>
     private void OnApplicationQuit()
     {
         
@@ -230,6 +209,11 @@ public class PlayerController : MonoBehaviour
         ContController.setContSuccess(0);
     }
 
+    /// <summary>
+    /// Esta parte es importante, aquí se maneja cuando el jugador colisiona con el bloque correcto e incorrectos, de los minijuegos de sucesiones; y sumas y restas.
+    /// Se maneja la transición de niveles y dificultades, contadores de aciertos y fallidos.
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Incorrect"))
@@ -257,18 +241,14 @@ public class PlayerController : MonoBehaviour
             {
                 actJoyStick.SetActive(false);
                 actJump.SetActive(false);
-                resultPanel.SetActive(true);
                 loadDataContadores();
                 scoreText.text = Puntaje.puntaje.puntos.ToString();
-               
                 timeText.text = TimeController.timeController.minSeg;;
-                
-                
                 // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
                 TimeController.timeController.IsGameOver();
+                TimeController.timeController.IsOver();
                 Puntaje.puntaje.IsGameOver();
                 CoinContController.coinContController.IsGameOver();
-                TimeController.timeController.IsOver();
                 Puntaje.puntaje.IsOver();
                 CoinContController.coinContController.IsOver();
                 
@@ -281,6 +261,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("N° de Precisión del nivel: "+decimal.Round((decimal)precision*100,2));
                 ContController.setContSuccess(0);
                 ContController.setContFailure(0);
+                resultPanel.SetActive(true);
                 
             }
             if (Application.loadedLevelName == "Sucesiones_Medio_1") SceneManager.LoadScene("Sucesiones_Medio_2", LoadSceneMode.Single);
@@ -291,18 +272,14 @@ public class PlayerController : MonoBehaviour
             {
                 actJoyStick.SetActive(false);
                 actJump.SetActive(false);
-                resultPanel.SetActive(true);
                 loadDataContadores();
                 scoreText.text = Puntaje.puntaje.puntos.ToString();
-                
                 timeText.text = TimeController.timeController.minSeg;;
-                
-                
                 // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
                 TimeController.timeController.IsGameOver();
+                TimeController.timeController.IsOver();
                 Puntaje.puntaje.IsGameOver();
                 CoinContController.coinContController.IsGameOver();
-                TimeController.timeController.IsOver();
                 Puntaje.puntaje.IsOver();
                 CoinContController.coinContController.IsOver();
                 
@@ -315,6 +292,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("N° de Precisión del nivel: "+decimal.Round((decimal)precision*100,2));
                 ContController.setContSuccess(0);
                 ContController.setContFailure(0);
+                resultPanel.SetActive(true);
             }
             else if (Application.loadedLevelName == "Sucesiones_Dificil_1") SceneManager.LoadScene("Sucesiones_Dificil_2", LoadSceneMode.Single);
             else if (Application.loadedLevelName == "Sucesiones_Dificil_2") SceneManager.LoadScene("Sucesiones_Dificil_3", LoadSceneMode.Single);
@@ -324,18 +302,14 @@ public class PlayerController : MonoBehaviour
             {
                 actJoyStick.SetActive(false);
                 actJump.SetActive(false);
-                resultPanel.SetActive(true);
                 loadDataContadores();
                 scoreText.text = Puntaje.puntaje.puntos.ToString();
-                
-                timeText.text = TimeController.timeController.minSeg;
-                
-                
+                timeText.text = TimeController.timeController.minSeg;;
                 // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
                 TimeController.timeController.IsGameOver();
+                TimeController.timeController.IsOver();
                 Puntaje.puntaje.IsGameOver();
                 CoinContController.coinContController.IsGameOver();
-                TimeController.timeController.IsOver();
                 Puntaje.puntaje.IsOver();
                 CoinContController.coinContController.IsOver();
                 
@@ -348,6 +322,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("N° de Precisión del nivel: "+decimal.Round((decimal)precision*100,2));
                 ContController.setContSuccess(0);
                 ContController.setContFailure(0);
+                resultPanel.SetActive(true);
             }
             // FACIL NIVEL 1 sumas y restas
             if (Application.loadedLevelName == "Sumas_y_restas_facil_1") SceneManager.LoadScene("Sumas_y_restas_facil_2", LoadSceneMode.Single); 
@@ -358,18 +333,14 @@ public class PlayerController : MonoBehaviour
             {
                 actJoyStick.SetActive(false);
                 actJump.SetActive(false);
-                resultPanel.SetActive(true);
                 loadDataContadores();
                 scoreText.text = Puntaje.puntaje.puntos.ToString();
-               
                 timeText.text = TimeController.timeController.minSeg;;
-                
-                
                 // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
                 TimeController.timeController.IsGameOver();
+                TimeController.timeController.IsOver();
                 Puntaje.puntaje.IsGameOver();
                 CoinContController.coinContController.IsGameOver();
-                TimeController.timeController.IsOver();
                 Puntaje.puntaje.IsOver();
                 CoinContController.coinContController.IsOver();
                 
@@ -382,6 +353,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("N° de Precisión del nivel: "+decimal.Round((decimal)precision*100,2));
                 ContController.setContSuccess(0);
                 ContController.setContFailure(0);
+                resultPanel.SetActive(true);
             }
             else if (Application.loadedLevelName == "Sumas_y_restas_medio_1") SceneManager.LoadScene("Sumas_y_restas_medio_2", LoadSceneMode.Single);
             else if (Application.loadedLevelName == "Sumas_y_restas_medio_2") SceneManager.LoadScene("Sumas_y_restas_medio_3", LoadSceneMode.Single);
@@ -391,18 +363,14 @@ public class PlayerController : MonoBehaviour
             {
                 actJoyStick.SetActive(false);
                 actJump.SetActive(false);
-                resultPanel.SetActive(true);
                 loadDataContadores();
                 scoreText.text = Puntaje.puntaje.puntos.ToString();
-               
                 timeText.text = TimeController.timeController.minSeg;;
-                
-                
                 // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
                 TimeController.timeController.IsGameOver();
+                TimeController.timeController.IsOver();
                 Puntaje.puntaje.IsGameOver();
                 CoinContController.coinContController.IsGameOver();
-                TimeController.timeController.IsOver();
                 Puntaje.puntaje.IsOver();
                 CoinContController.coinContController.IsOver();
                 
@@ -415,6 +383,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("N° de Precisión del nivel: "+decimal.Round((decimal)precision*100,2));
                 ContController.setContSuccess(0);
                 ContController.setContFailure(0);
+                resultPanel.SetActive(true);
             }
             else if (Application.loadedLevelName == "Sumas_y_restas_dificil_1") SceneManager.LoadScene("Sumas_y_restas_dificil_2", LoadSceneMode.Single);
             else if (Application.loadedLevelName == "Sumas_y_restas_dificil_2") SceneManager.LoadScene("Sumas_y_restas_dificil_3", LoadSceneMode.Single);
@@ -424,18 +393,14 @@ public class PlayerController : MonoBehaviour
             {
                 actJoyStick.SetActive(false);
                 actJump.SetActive(false);
-                resultPanel.SetActive(true);
                 loadDataContadores();
                 scoreText.text = Puntaje.puntaje.puntos.ToString();
-               
                 timeText.text = TimeController.timeController.minSeg;;
-                
-                
                 // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
                 TimeController.timeController.IsGameOver();
+                TimeController.timeController.IsOver();
                 Puntaje.puntaje.IsGameOver();
                 CoinContController.coinContController.IsGameOver();
-                TimeController.timeController.IsOver();
                 Puntaje.puntaje.IsOver();
                 CoinContController.coinContController.IsOver();
                 
@@ -448,6 +413,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("N° de Precisión del nivel: "+decimal.Round((decimal)precision*100,2));
                 ContController.setContSuccess(0);
                 ContController.setContFailure(0);
+                resultPanel.SetActive(true);
             }
            
             
