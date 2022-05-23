@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DevAccountEmail: edwin.vega12@hotmail.com
   DevAccountToken: gja37ise3eb47xfytsjpbycsyomcfp4m1n8jariujr3b9hurqdg5iqnwxijp4b5115z1zjgztkxqzkqpxrd9dncgoknwb48cnmk76eottfs8csyaerjeni7yqsk77q9siaots5hiwyhrgnff7r7widpe8qgpi96u1s9o96gng1g5afotesqjchxyzhsxwp4yxysxnoa7
-  SelectedStudio: 
+  SelectedStudio: _OVERRIDE_
   SdkPath: Assets/PlayFabSDK
   EdExPath: 
   LocalCloudScriptPath: 

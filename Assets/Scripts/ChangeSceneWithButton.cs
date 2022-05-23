@@ -1,11 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using PlayFab;
+using PlayFab.ClientModels;
 using UnityEngine;
 using UnityEngine.SceneManagement; 
 
 
 public class ChangeSceneWithButton : MonoBehaviour
 {
+
+    public void Logout()
+    {
+        PlayFabClientAPI.ForgetAllCredentials();
+        LoadScene("Loguin");
+    }
     
     /// <summary>
     /// Carga la escena correspondiente 

@@ -29,8 +29,7 @@ public class playfablogin : MonoBehaviour
 
         //Note: Setting title Id here can be skipped if you have set the value in Editor Extensions already. 
 
-        if (string.IsNullOrEmpty(PlayFabSettings.TitleId)) 
-
+        if (string.IsNullOrEmpty(PlayFabSettings.TitleId))
         { 
 
             PlayFabSettings.TitleId = "2A8BF"; // Please change this value to your own titleId from PlayFab Game Manager 
@@ -99,8 +98,12 @@ public class playfablogin : MonoBehaviour
 
         PlayerPrefs.SetString("PASSWORD", userPassword); 
 
-        PlayerPrefs.SetString("NAME", userName); 
+        PlayerPrefs.SetString("NAME", userName);
 
+        Debug.Log(userName);
+        Debug.Log(userEmail);
+        Debug.Log(userPassword);
+        
         loginPanel.SetActive(false); 
 
     } 
