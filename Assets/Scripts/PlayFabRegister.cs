@@ -28,11 +28,13 @@ public class PlayFabRegister : MonoBehaviour
     
     public void RegisterButton()
     {
-        if (passwordInput.text.Length <6)
+        if (userInput.text=="" || emailInput.text=="" || passwordInput.text=="" || birthdayInput.text=="")
         {
-            message.text = "La constraseña debe ser mayor o igual a 6 y menos de 100 carácteres";
+            message.text = "LLene todos los campos requeridos";
             return;
         }
+       
+       
         
         var request = new RegisterPlayFabUserRequest
         {
