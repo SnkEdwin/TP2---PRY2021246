@@ -24,6 +24,12 @@ public class PlayFabLogin1 : MonoBehaviour
 
     public void LoginButton()
     {
+        if ( emailInput.text=="" || passwordInput.text=="")
+        {
+            errorMessage.text = "LLene todos los campos requeridos";
+            return;
+        }
+        
         var request = new LoginWithEmailAddressRequest
         {
             Email = emailInput.text,
