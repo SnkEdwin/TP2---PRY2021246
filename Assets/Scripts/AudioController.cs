@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controlador del audio 
+/// </summary>
 public class AudioController : MonoBehaviour
 {
     public AudioSource audio;
@@ -12,7 +15,6 @@ public class AudioController : MonoBehaviour
         if (sharedInstance == null) sharedInstance = this;
     }
     void Start()
-
     {
         audio = GetComponent<AudioSource>();
         audio.mute = true;
