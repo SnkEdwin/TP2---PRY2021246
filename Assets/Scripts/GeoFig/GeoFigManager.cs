@@ -132,6 +132,7 @@ public class GeoFigManager : MonoBehaviour
     public void AddDificultyScore()
     {
         currentScore += dificultyBonus[dificulty];
+        currentScoreText.text = currentScore.ToString();
     }
 
     public void NextLevel()
@@ -180,6 +181,9 @@ public class GeoFigManager : MonoBehaviour
         scoreText.text = currentScore.ToString();
         TimeSpan time = TimeSpan.FromSeconds(timeSpend);
         timeText.text = string.Format("{0:00}:{1:00}", time.TotalMinutes, time.Seconds);
+
+        ResultsManager.instance.AddResult(System.DateTime.Now.ToString(),2,dificulty,
+            currentScore,(int) timeSpend,1);
     }
     
     public void ReplayDificulty()
