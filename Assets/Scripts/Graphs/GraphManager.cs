@@ -16,6 +16,7 @@ public class GraphManager : MonoBehaviour
 
     public RectTransform labelTemplateX;
     public RectTransform labelTemplateY;
+    public RectTransform noDataTemplate;
 
     public List<string> labelsX;
     public List<string> labelsY;
@@ -47,6 +48,14 @@ public class GraphManager : MonoBehaviour
         //Conseguir Resultados filtrados <- Cambiar luego a filtrado por especificaciones
         List<Resultado> results = new List<Resultado>();
         results = ResultsManager.instance.GetFilteredResults();
+
+        if (results.Count == 0)
+        {
+            RectTransform noDataLabel = Instantiate(noDataTemplate);
+            noDataLabel.SetParent(graphContainer);
+            noDataLabel.gameObject.SetActive(true);
+            noDataLabel.anchoredPosition = new Vector2(0, 0);
+        }
 
         if (ResultsManager.instance.GetMetric() == 0)
         {
