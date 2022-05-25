@@ -47,7 +47,11 @@ public class PlayFabLogin1 : MonoBehaviour
     
     private void OnLoginFailure(PlayFabError obj)
     {
-        errorMessage.text = obj.ErrorMessage;
-        Debug.Log(obj.GenerateErrorReport());
+        
+        errorMessage.text = "Correo electrónico y/o contraseña incorrecta";
+        
+        
     }
+    
+    
 }

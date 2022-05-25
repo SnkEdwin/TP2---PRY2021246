@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Threading;
 using PlayFab;
 using PlayFab.ClientModels;
@@ -15,7 +17,9 @@ public class PlayFabRegister : MonoBehaviour
     public InputField passwordInput;
     public InputField birthdayInput;
     public Text message;
-  
+    private Regex regex = new Regex("^(?:[012]?[0-9]|3[01])[/](?:0?[1-9]|1[0-2])[/](?:[0-9]{2}){1,2}$");
+    private DateTime dt;
+    private bool isValid;
     public void Start()
     {
         if (string.IsNullOrEmpty(PlayFabSettings.TitleId))
@@ -28,23 +32,36 @@ public class PlayFabRegister : MonoBehaviour
     
     public void RegisterButton()
     {
+        
         if (userInput.text=="" || emailInput.text=="" || passwordInput.text=="" || birthdayInput.text=="")
         {
             message.text = "LLene todos los campos requeridos";
             return;
         }
+        if (passwordInput.text.Length<6)
+        {
+            message.text = "La contraseña debe ser mínimo de 6 y máximo de 100 carácteres";
+            return;
+        }
+        if (userInput.text.Length<4)
+        {
+            message.text = "El nombre de el usuario debe ser mínimo de 4 y máximo de 100 carácteres";
+            return;
+        }
+        if (!regex.IsMatch(birthdayInput.text.Trim()))
+        {
+            
+            message.text = "Formato ingresado no válido";
+            return;
+        }
        
-       
-        
         var request = new RegisterPlayFabUserRequest
         {
-            // TODO:  TAMBIEN DEBE ACEPTAR COMO INPUT LA FECHA DE NACIMIENTO
             Username = userInput.text,
             Email = emailInput.text,
             Password = passwordInput.text,
             RequireBothUsernameAndEmail = false
         };
-        message.text = "Cargando...";
         PlayFabClientAPI.RegisterPlayFabUser(request, OnRegisterSuccess, OnError);
         
        
@@ -52,13 +69,14 @@ public class PlayFabRegister : MonoBehaviour
 
     private void OnRegisterSuccess(RegisterPlayFabUserResult result)
     {
-        
+       
         var request1 = new LoginWithEmailAddressRequest
         {
             Email = emailInput.text,
             Password = passwordInput.text,
         };
-        Thread.Sleep(1000);
+        message.text = "Se ha registrado satisfactoriamente";
+        Thread.Sleep(2000);
         PlayFabClientAPI.LoginWithEmailAddress(request1,OnLoginSuccess,OnError);
 
         
@@ -92,8 +110,19 @@ public class PlayFabRegister : MonoBehaviour
 
     private void OnError(PlayFabError error)
     {
-        message.text = error.ErrorMessage;
-        Debug.Log(error.GenerateErrorReport());
+        
+        switch (error.Error)
+        {
+            case PlayFabErrorCode.EmailAddressNotAvailable:
+                message.text = "El correo ya se encuentra registrado";
+                break;
+            default:
+                message.text = error.ErrorMessage;
+                break;
+            
+        }
+
+        
     }
 
    
