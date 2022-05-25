@@ -17,6 +17,7 @@ public class GraphManager : MonoBehaviour
     public RectTransform labelTemplateX;
     public RectTransform labelTemplateY;
     public RectTransform noDataTemplate;
+    public RectTransform pointValue;
 
     public List<string> labelsX;
     public List<string> labelsY;
@@ -154,6 +155,13 @@ public class GraphManager : MonoBehaviour
             previousCircle = circleGameObject;
             */
 
+            RectTransform pointValueText = Instantiate(pointValue);
+            pointValueText.SetParent(graphContainer);
+            pointValueText.gameObject.SetActive(true);
+            pointValueText.anchoredPosition = new Vector2(xPosition, yPosition);
+            pointValueText.GetComponent<TextMeshProUGUI>().text = valueList[i].ToString();
+
+
             RectTransform labelX = Instantiate(labelTemplateX);
             labelX.SetParent(graphContainer);
             labelX.gameObject.SetActive(true);
@@ -195,6 +203,16 @@ public class GraphManager : MonoBehaviour
                                     circleGameObject.GetComponent<RectTransform>().anchoredPosition);
             }
             previousCircle = circleGameObject;
+
+            float valueOffsetX = 0;
+            float valueOffsetY = 5f;
+
+            RectTransform pointValueText = Instantiate(pointValue);
+            pointValueText.SetParent(graphContainer);
+            pointValueText.gameObject.SetActive(true);
+            pointValueText.anchoredPosition = new Vector2(xPosition + valueOffsetX, yPosition + valueOffsetY);
+            int valuePercentage =(int) (valueList[i] * 100);
+            pointValueText.GetComponent<TextMeshProUGUI>().text = valuePercentage.ToString()+"%";
 
             RectTransform labelX = Instantiate(labelTemplateX);
 
