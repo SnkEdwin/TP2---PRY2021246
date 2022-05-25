@@ -244,6 +244,13 @@ public class PlayerController : MonoBehaviour
                 loadDataContadores();
                 scoreText.text = Puntaje.puntaje.puntos.ToString();
                 timeText.text = TimeController.timeController.minSeg;;
+
+                contadorTotal = contadorAciertos + contadorFallido;
+                precision = (contadorAciertos / contadorTotal);
+
+                //Guardado de resultado
+                ResultsManager.instance.AddResult(System.DateTime.Now.ToString(), 0, 0,(int)Puntaje.puntaje.puntos, (int)TimeController.timeController.restante, precision);
+
                 // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
                 TimeController.timeController.IsGameOver();
                 TimeController.timeController.IsOver();
@@ -251,11 +258,7 @@ public class PlayerController : MonoBehaviour
                 CoinContController.coinContController.IsGameOver();
                 Puntaje.puntaje.IsOver();
                 CoinContController.coinContController.IsOver();
-                
-                
-                contadorTotal = contadorAciertos + contadorFallido;
-                precision = (contadorAciertos / contadorTotal);
-                
+
                 Debug.Log("Colision - Gano el juego");
                 Debug.Log("N° Total Incorrectas: "+ContController.getContFailure());
                 Debug.Log("N° de Precisión del nivel: "+decimal.Round((decimal)precision*100,2));
@@ -275,6 +278,13 @@ public class PlayerController : MonoBehaviour
                 loadDataContadores();
                 scoreText.text = Puntaje.puntaje.puntos.ToString();
                 timeText.text = TimeController.timeController.minSeg;;
+
+                contadorTotal = contadorAciertos + contadorFallido;
+                precision = (contadorAciertos / contadorTotal);
+
+                //Guardado de resultado
+                ResultsManager.instance.AddResult(System.DateTime.Now.ToString(), 0, 0, (int)Puntaje.puntaje.puntos, (int)TimeController.timeController.restante, precision);
+
                 // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
                 TimeController.timeController.IsGameOver();
                 TimeController.timeController.IsOver();
@@ -282,11 +292,7 @@ public class PlayerController : MonoBehaviour
                 CoinContController.coinContController.IsGameOver();
                 Puntaje.puntaje.IsOver();
                 CoinContController.coinContController.IsOver();
-                
-                
-                contadorTotal = contadorAciertos + contadorFallido;
-                precision = (contadorAciertos / contadorTotal);
-                
+
                 Debug.Log("Colision - Gano el juego");
                 Debug.Log("N° Total Incorrectas: "+ContController.getContFailure());
                 Debug.Log("N° de Precisión del nivel: "+decimal.Round((decimal)precision*100,2));
@@ -305,6 +311,13 @@ public class PlayerController : MonoBehaviour
                 loadDataContadores();
                 scoreText.text = Puntaje.puntaje.puntos.ToString();
                 timeText.text = TimeController.timeController.minSeg;;
+
+                contadorTotal = contadorAciertos + contadorFallido;
+                precision = (contadorAciertos / contadorTotal);
+
+                //Guardado de resultado
+                ResultsManager.instance.AddResult(System.DateTime.Now.ToString(), 0, 0, (int)Puntaje.puntaje.puntos, (int)TimeController.timeController.restante, precision);
+
                 // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
                 TimeController.timeController.IsGameOver();
                 TimeController.timeController.IsOver();
@@ -312,11 +325,7 @@ public class PlayerController : MonoBehaviour
                 CoinContController.coinContController.IsGameOver();
                 Puntaje.puntaje.IsOver();
                 CoinContController.coinContController.IsOver();
-                
-                
-                contadorTotal = contadorAciertos + contadorFallido;
-                precision = (contadorAciertos / contadorTotal);
-                
+
                 Debug.Log("Colision - Gano el juego");
                 Debug.Log("N° Total Incorrectas: "+ContController.getContFailure());
                 Debug.Log("N° de Precisión del nivel: "+decimal.Round((decimal)precision*100,2));
@@ -336,6 +345,13 @@ public class PlayerController : MonoBehaviour
                 loadDataContadores();
                 scoreText.text = Puntaje.puntaje.puntos.ToString();
                 timeText.text = TimeController.timeController.minSeg;;
+
+                contadorTotal = contadorAciertos + contadorFallido;
+                precision = (contadorAciertos / contadorTotal);
+
+                //Guardado de resultado
+                ResultsManager.instance.AddResult(System.DateTime.Now.ToString(), 0, 0, (int)Puntaje.puntaje.puntos, (int)TimeController.timeController.restante, precision);
+
                 // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
                 TimeController.timeController.IsGameOver();
                 TimeController.timeController.IsOver();
@@ -343,11 +359,7 @@ public class PlayerController : MonoBehaviour
                 CoinContController.coinContController.IsGameOver();
                 Puntaje.puntaje.IsOver();
                 CoinContController.coinContController.IsOver();
-                
-                
-                contadorTotal = contadorAciertos + contadorFallido;
-                precision = (contadorAciertos / contadorTotal);
-                
+
                 Debug.Log("Colision - Gano el juego");
                 Debug.Log("N° Total Incorrectas: "+ContController.getContFailure());
                 Debug.Log("N° de Precisión del nivel: "+decimal.Round((decimal)precision*100,2));
@@ -366,6 +378,13 @@ public class PlayerController : MonoBehaviour
                 loadDataContadores();
                 scoreText.text = Puntaje.puntaje.puntos.ToString();
                 timeText.text = TimeController.timeController.minSeg;;
+
+                contadorTotal = contadorAciertos + contadorFallido;
+                precision = (contadorAciertos / contadorTotal);
+
+                //Guardado de resultado
+                ResultsManager.instance.AddResult(System.DateTime.Now.ToString(), 0, 0, (int)Puntaje.puntaje.puntos, (int)TimeController.timeController.restante, precision);
+
                 // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
                 TimeController.timeController.IsGameOver();
                 TimeController.timeController.IsOver();
@@ -373,11 +392,7 @@ public class PlayerController : MonoBehaviour
                 CoinContController.coinContController.IsGameOver();
                 Puntaje.puntaje.IsOver();
                 CoinContController.coinContController.IsOver();
-                
-                
-                contadorTotal = contadorAciertos + contadorFallido;
-                precision = (contadorAciertos / contadorTotal);
-                
+
                 Debug.Log("Colision - Gano el juego");
                 Debug.Log("N° Total Incorrectas: "+ContController.getContFailure());
                 Debug.Log("N° de Precisión del nivel: "+decimal.Round((decimal)precision*100,2));
@@ -396,6 +411,13 @@ public class PlayerController : MonoBehaviour
                 loadDataContadores();
                 scoreText.text = Puntaje.puntaje.puntos.ToString();
                 timeText.text = TimeController.timeController.minSeg;;
+
+                contadorTotal = contadorAciertos + contadorFallido;
+                precision = (contadorAciertos / contadorTotal);
+
+                //Guardado de resultado
+                ResultsManager.instance.AddResult(System.DateTime.Now.ToString(), 0, 0, (int)Puntaje.puntaje.puntos, (int)TimeController.timeController.restante, precision);
+
                 // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
                 TimeController.timeController.IsGameOver();
                 TimeController.timeController.IsOver();
@@ -403,11 +425,7 @@ public class PlayerController : MonoBehaviour
                 CoinContController.coinContController.IsGameOver();
                 Puntaje.puntaje.IsOver();
                 CoinContController.coinContController.IsOver();
-                
-                
-                contadorTotal = contadorAciertos + contadorFallido;
-                precision = (contadorAciertos / contadorTotal);
-                
+
                 Debug.Log("Colision - Gano el juego");
                 Debug.Log("N° Total Incorrectas: "+ContController.getContFailure());
                 Debug.Log("N° de Precisión del nivel: "+decimal.Round((decimal)precision*100,2));
