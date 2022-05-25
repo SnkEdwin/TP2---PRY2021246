@@ -24,7 +24,7 @@ public class PlayFabLogin1 : MonoBehaviour
 
     public void LoginButton()
     {
-        if ( emailInput.text=="" || passwordInput.text=="")
+        if ( emailInput.text.Trim()=="" || passwordInput.text.Trim()=="")
         {
             errorMessage.text = "LLene todos los campos requeridos";
             return;
@@ -32,10 +32,9 @@ public class PlayFabLogin1 : MonoBehaviour
         
         var request = new LoginWithEmailAddressRequest
         {
-            Email = emailInput.text,
-            Password = passwordInput.text
+            Email = emailInput.text.Trim(),
+            Password = passwordInput.text.Trim()
         };
-        errorMessage.text = "Cargando...";
         PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnLoginFailure);
     }
 

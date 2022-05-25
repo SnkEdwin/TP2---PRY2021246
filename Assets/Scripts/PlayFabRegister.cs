@@ -33,7 +33,7 @@ public class PlayFabRegister : MonoBehaviour
     public void RegisterButton()
     {
         
-        if (userInput.text=="" || emailInput.text=="" || passwordInput.text=="" || birthdayInput.text=="")
+        if (userInput.text.Trim()=="" || emailInput.text.Trim()=="" || passwordInput.text.Trim()=="" || birthdayInput.text.Trim()=="")
         {
             message.text = "LLene todos los campos requeridos";
             return;
@@ -57,9 +57,9 @@ public class PlayFabRegister : MonoBehaviour
        
         var request = new RegisterPlayFabUserRequest
         {
-            Username = userInput.text,
-            Email = emailInput.text,
-            Password = passwordInput.text,
+            Username = userInput.text.Trim(),
+            Email = emailInput.text.Trim(),
+            Password = passwordInput.text.Trim(),
             RequireBothUsernameAndEmail = false
         };
         PlayFabClientAPI.RegisterPlayFabUser(request, OnRegisterSuccess, OnError);
@@ -72,8 +72,8 @@ public class PlayFabRegister : MonoBehaviour
        
         var request1 = new LoginWithEmailAddressRequest
         {
-            Email = emailInput.text,
-            Password = passwordInput.text,
+            Email = emailInput.text.Trim(),
+            Password = passwordInput.text.Trim()
         };
         message.text = "Se ha registrado satisfactoriamente";
         Thread.Sleep(2000);
