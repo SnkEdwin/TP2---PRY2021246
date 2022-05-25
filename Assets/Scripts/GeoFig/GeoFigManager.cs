@@ -10,7 +10,7 @@ public class GeoFigManager : MonoBehaviour
 
 
     [Range(0, 2)]
-    public int dificulty;
+    private int dificulty;
 
     //Se usara desde nivel 1 al 5 siendo el nivel 0 el boton de inicio
     public int currentLvl = 0;
@@ -19,6 +19,7 @@ public class GeoFigManager : MonoBehaviour
     [Header("DATA VARIABLES")]
     public float timeSpend;
     public int mistakes;
+    public int minMoves;
 
     [Header("SCORE VARIABLES")]
     public Text currentScoreText;
@@ -55,6 +56,8 @@ public class GeoFigManager : MonoBehaviour
         if (sharedInstance == null) sharedInstance = this;
 
         dificulty = DificultyManager.GetDificulty();
+        CalculateMinMoves();
+        StartGame();
     }
 
     // Update is called once per frame
@@ -80,6 +83,32 @@ public class GeoFigManager : MonoBehaviour
                 currentTimeText.text = string.Format("{0:00}:{1:00}", time.TotalMinutes, time.Seconds);
             }
         }
+    }
+
+    public void CalculateMinMoves()
+    {
+        List<Transform> tempList = new List<Transform>();
+        switch (DificultyManager.GetDificulty())
+        {
+            case 0:
+                tempList = easy;
+                break;
+            case 1:
+                tempList = medium;
+                break;
+            case 2:
+                tempList = hard;
+                break;
+            default:
+                break;
+        }
+
+        for (int i = 1; i < tempList.Count; i++)
+        {
+            minMoves += tempList[i].childCount;
+        }
+
+        minMoves = minMoves / 2;
     }
 
     public void StartGame()
@@ -174,6 +203,10 @@ public class GeoFigManager : MonoBehaviour
     }
 
     #region Results
+    public float CalculateAccuracy()
+    {
+        return (float)minMoves / (minMoves + mistakes);
+    }
 
     public void ActivateResults()
     {
@@ -183,7 +216,7 @@ public class GeoFigManager : MonoBehaviour
         timeText.text = string.Format("{0:00}:{1:00}", time.TotalMinutes, time.Seconds);
 
         ResultsManager.instance.AddResult(System.DateTime.Now.ToString(),2,dificulty,
-            currentScore,(int) timeSpend,1);
+            currentScore,(int) timeSpend,CalculateAccuracy());
     }
     
     public void ReplayDificulty()
