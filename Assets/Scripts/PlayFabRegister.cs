@@ -117,6 +117,7 @@ public class PlayFabRegister : MonoBehaviour
                 message.text = "El correo ya se encuentra registrado";
                 break;
             default:
+                Debug.Log(error);
                 message.text = error.ErrorMessage;
                 break;
             

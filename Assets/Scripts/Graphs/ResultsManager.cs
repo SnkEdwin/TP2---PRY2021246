@@ -38,7 +38,9 @@ public class ResultsManager : MonoBehaviour
 
         PlayFabClientAPI.UpdateUserData(request,OnResultSend,OnResultError);
     }
-
+    
+    
+    
     void OnResultSend(UpdateUserDataResult result)
     {
         Debug.Log("Resultados Guardados Exitosamente");
@@ -47,7 +49,11 @@ public class ResultsManager : MonoBehaviour
     void OnResultError(PlayFabError error)
     {
         Debug.Log("Error al cargar los resultados");
+    
     }
+
+   
+    
 
     // Start is called before the first frame update
     void Start()
@@ -66,7 +72,7 @@ public class ResultsManager : MonoBehaviour
         {
             Destroy(this);
         }
-
+        GetResults();
     }
 
     // Update is called once per frame
@@ -101,17 +107,36 @@ public class ResultsManager : MonoBehaviour
             AddResult(System.DateTime.Now.ToString(),randomMinijuego, randomDificultad, randomPuntaje, randomTiempo, randomPrecision);
         }
 
-        if (Input.GetKeyDown(KeyCode.D))
+        
+    }
+    
+    public void GetResults()
+    {
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnResultsDataRecieved, OnResultError);
+    }
+    
+    private void OnResultsDataRecieved(GetUserDataResult resultado)
+    {
+        Debug.Log("Recieved results data!");
+        if (resultado.Data != null && resultado.Data.ContainsKey("Resultados"))
         {
-            SaveResults();
+            
+            List<Resultado> results= JsonConvert.DeserializeObject<List<Resultado>>(resultado.Data["Resultados"].Value);
+            Debug.Log(results.Count);
+            for (int i = 0; i < results.Count; i++)
+            {
+                
+                AddResult(results[i].fecha, results[i].minijuego, results[i].dificultad, results[i].puntaje,
+                    results[i].tiempo, results[i].precision);
+            }
         }
     }
 
     public void AddResult(string fecha, int minijuego, int dificultad, int puntaje, int tiempo, float precision)
     {
         Resultado resultado = new Resultado(fecha, minijuego, dificultad, puntaje, tiempo, precision);
-
         loadedResults.Add(resultado);
+        SaveResults();
     }
 
     public List<Resultado> GetFilteredResults()
