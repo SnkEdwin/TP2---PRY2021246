@@ -484,7 +484,7 @@ PrefabInstance:
       objectReference: {fileID: 1960192871}
     - target: {fileID: 1511220790746690924, guid: a14de537ddde285499b31c7cc1d9327c, type: 3}
       propertyPath: cantidadPuntos
-      value: 100
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1511220790764073019, guid: a14de537ddde285499b31c7cc1d9327c, type: 3}
       propertyPath: m_Text
@@ -620,7 +620,7 @@ PrefabInstance:
       objectReference: {fileID: 1960192871}
     - target: {fileID: 7000437500141495425, guid: a14de537ddde285499b31c7cc1d9327c, type: 3}
       propertyPath: cantidadPuntos
-      value: 100
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7000437500535524526, guid: a14de537ddde285499b31c7cc1d9327c, type: 3}
       propertyPath: puntaje
@@ -628,7 +628,7 @@ PrefabInstance:
       objectReference: {fileID: 1960192871}
     - target: {fileID: 7000437500535524526, guid: a14de537ddde285499b31c7cc1d9327c, type: 3}
       propertyPath: cantidadPuntos
-      value: 100
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8868348846406647412, guid: a14de537ddde285499b31c7cc1d9327c, type: 3}
       propertyPath: m_LocalPosition.x

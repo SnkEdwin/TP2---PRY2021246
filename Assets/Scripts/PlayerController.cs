@@ -220,11 +220,12 @@ public class PlayerController : MonoBehaviour
         {
             contadorFallido += 1;
             ContController.setContFailure(contadorFallido);
-            //print("contadorFallido: " + contadorFallido);
             print("contadorFailure: " + ContController.getContFailure());
+            Puntaje.puntaje.RestarPuntos(10);
         }
         else if (collision.CompareTag("Correct"))
         {
+            Puntaje.puntaje.SumarPuntos(100);
             contadorAciertos += 1;
             ContController.setContSuccess(contadorAciertos);
             print("contadorAciertos: " + ContController.getContSuccess());
@@ -435,11 +436,7 @@ public class PlayerController : MonoBehaviour
            
             
         }
-        else if (collision.CompareTag("Block"))
-        {
-            
-            //transform.position += new Vector3(0, 0,0) * 0 * 0;
-        }
+        
     }
 
 

@@ -53,6 +53,22 @@ public class Puntaje : MonoBehaviour
         puntos += puntosEntrada;
     }
     
+    
+    /// <summary>
+    /// Suma los puntos conseguidos por conseguir una moneda
+    /// </summary>
+    /// <param name="puntosEntrada"></param>
+    public void RestarPuntos(float puntosEntrada)
+    {
+        if (puntos==0){}
+        else
+        {
+            puntos -= puntosEntrada;    
+        }
+        
+        
+    }
+    
     /// <summary>
     /// Se guarda el puntaje para la siguiente escena
     /// </summary>
