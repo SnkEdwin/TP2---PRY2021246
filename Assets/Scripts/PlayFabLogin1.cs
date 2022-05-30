@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
@@ -40,8 +41,8 @@ public class PlayFabLogin1 : MonoBehaviour
 
     public void OnLoginSuccess(LoginResult obj)
     {
-        
         SceneManager.LoadScene("Menu_Options");
+       
     }
     
     private void OnLoginFailure(PlayFabError obj)

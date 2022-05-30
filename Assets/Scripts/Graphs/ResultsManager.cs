@@ -1,36 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Resultado
-{
-    public string fecha;
-    public int minijuego;
-    public int dificultad;
-    public int puntaje;
-    public int tiempo;
-    public float precision;
-
-    public Resultado()
-    {
-        fecha = "";
-        minijuego = 0;
-        dificultad = 0;
-        puntaje = -1;
-        tiempo = -1;
-        precision = -1;
-    }
-    public Resultado(string fecha, int minijuego, int dificultad,
-                int puntaje, int tiempo, float precision)
-    {
-        this.fecha = fecha;
-        this.minijuego = minijuego;
-        this.dificultad = dificultad;
-        this.puntaje = puntaje;
-        this.tiempo = tiempo;
-        this.precision = precision;
-    }
-}
+using Newtonsoft.Json;
+using PlayFab;
+using PlayFab.ClientModels;
 
 public class ResultsManager : MonoBehaviour
 {
@@ -45,6 +18,42 @@ public class ResultsManager : MonoBehaviour
     private int metrica = 0;
 
     public static ResultsManager instance;
+
+    public void SaveResults()
+    {
+        List<Resultado> results = new List<Resultado>();
+        
+        foreach (Resultado item in loadedResults)
+        {
+            results.Add(item);
+        }
+
+        var request = new UpdateUserDataRequest
+        {
+            Data = new Dictionary<string, string>
+            {
+                {"Resultados", JsonConvert.SerializeObject(results) }
+            }
+        };
+
+        PlayFabClientAPI.UpdateUserData(request,OnResultSend,OnResultError);
+    }
+    
+    
+    
+    void OnResultSend(UpdateUserDataResult result)
+    {
+        Debug.Log("Resultados Guardados Exitosamente");
+    }
+
+    void OnResultError(PlayFabError error)
+    {
+        Debug.Log("Error al cargar los resultados");
+    
+    }
+
+   
+    
 
     // Start is called before the first frame update
     void Start()
@@ -63,7 +72,7 @@ public class ResultsManager : MonoBehaviour
         {
             Destroy(this);
         }
-
+        GetResults();
     }
 
     // Update is called once per frame
@@ -97,13 +106,37 @@ public class ResultsManager : MonoBehaviour
             float randomPrecision = Random.Range(0, 1f);
             AddResult(System.DateTime.Now.ToString(),randomMinijuego, randomDificultad, randomPuntaje, randomTiempo, randomPrecision);
         }
+
+        
+    }
+    
+    public void GetResults()
+    {
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnResultsDataRecieved, OnResultError);
+    }
+    
+    private void OnResultsDataRecieved(GetUserDataResult resultado)
+    {
+        Debug.Log("Recieved results data!");
+        if (resultado.Data != null && resultado.Data.ContainsKey("Resultados"))
+        {
+            
+            List<Resultado> results= JsonConvert.DeserializeObject<List<Resultado>>(resultado.Data["Resultados"].Value);
+            Debug.Log(results.Count);
+            for (int i = 0; i < results.Count; i++)
+            {
+                
+                AddResult(results[i].fecha, results[i].minijuego, results[i].dificultad, results[i].puntaje,
+                    results[i].tiempo, results[i].precision);
+            }
+        }
     }
 
     public void AddResult(string fecha, int minijuego, int dificultad, int puntaje, int tiempo, float precision)
     {
         Resultado resultado = new Resultado(fecha, minijuego, dificultad, puntaje, tiempo, precision);
-
         loadedResults.Add(resultado);
+        SaveResults();
     }
 
     public List<Resultado> GetFilteredResults()

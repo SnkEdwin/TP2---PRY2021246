@@ -231,7 +231,6 @@ public class PlayerController : MonoBehaviour
             // FACIL NIVEL 1 sucesiones
             if (Application.loadedLevelName == "Sucesiones_Facil_1")
             {
-                //isSucesion = true;
                 SceneManager.LoadScene("Sucesiones_Facil_2", LoadSceneMode.Single);
             } 
             else if (Application.loadedLevelName == "Sucesiones_Facil_2") SceneManager.LoadScene("Sucesiones_Facil_3", LoadSceneMode.Single);
