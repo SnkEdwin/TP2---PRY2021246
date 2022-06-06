@@ -11,12 +11,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
+
+/// <summary>
+/// Este es el script para registrar al usuario mediante llamada al Api de PlayFab.
+/// En él, se presenta los campos de entrada que se recibe en los campos de entrada de usuario, email, contraseña,  fecha de nacimiento, y mensajes de validaciones 
+/// </summary>
 public class PlayFabRegister : MonoBehaviour
 {
     public InputField userInput;
     public InputField emailInput;
     public InputField passwordInput;
-    public InputField birthdayInput;
+   // public InputField birthdayInput;
     public InputField nameInput2;
     public Text message;
     private bool isValid;
@@ -76,6 +82,10 @@ public class PlayFabRegister : MonoBehaviour
 
    
 
+    /// <summary>
+    /// Esta funcionalidad es la que se encarga de mandar los datos necesarios para el registro de un usuario,
+    /// como tambien, antes de mandar la información, se valida primero estos campos
+    /// </summary>
     public void RegisterButton()
     {
         
@@ -111,6 +121,10 @@ public class PlayFabRegister : MonoBehaviour
        
     }
 
+    /// <summary>
+    /// Funcionalidad cuando la operación de registro es exitosa, se muestra el mensaje de registro exitoso
+    /// </summary>
+    /// <param name="result"></param>
     private void OnRegisterSuccess(RegisterPlayFabUserResult result)
     {
        
@@ -135,6 +149,10 @@ public class PlayFabRegister : MonoBehaviour
     }
 
 
+    
+    /// <summary>
+    /// Funcionalidad para guardar la fecha de nacimiento y nombre 
+    /// </summary>
     private void SaveBirthday()
     {
         var request = new UpdateUserDataRequest
@@ -152,12 +170,16 @@ public class PlayFabRegister : MonoBehaviour
     }
 
     
-
+    
     private void OnDataSend(UpdateUserDataResult obj)
     {
         Debug.Log("Succesful user data send!");
     }
 
+    /// <summary>
+    /// Funcionalidad cuando la operación de registro es fallido
+    /// </summary>
+    /// <param name="error"></param>
     private void OnError(PlayFabError error)
     {
         
@@ -177,6 +199,10 @@ public class PlayFabRegister : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Esta funcionalidad se encarga de validar la información del día. Cuando se cambia los valores de mes y año
+    /// se cambia la lista de los días. 
+    /// </summary>
     public void RellenarDias()
     {
         
@@ -296,6 +322,9 @@ public class PlayFabRegister : MonoBehaviour
         
     }    
     
+    /// <summary>
+    /// Funcionalidad para rellenar la lista de los meses al iniciar la aplicación
+    /// </summary>
     public void RellenarMes()
     {
         monthInput.ClearOptions();
@@ -311,6 +340,9 @@ public class PlayFabRegister : MonoBehaviour
         
     }    
     
+    /// <summary>
+    /// Funcionalidad para rellenar la lista de los años al iniciar la aplicación
+    /// </summary>
     public void RellenarAños()
     {
         yearInput.ClearOptions();
