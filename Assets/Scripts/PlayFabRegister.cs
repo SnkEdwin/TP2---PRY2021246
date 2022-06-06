@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using PlayFab;
@@ -18,24 +19,71 @@ public class PlayFabRegister : MonoBehaviour
     public InputField birthdayInput;
     public InputField nameInput2;
     public Text message;
-    private Regex regex = new Regex("^(?:[012]?[0-9]|3[01])[/](?:0?[1-9]|1[0-2])[/](?:[0-9]{2}){1,2}$");
-    private DateTime dt;
     private bool isValid;
+    
+    // FECHA INPUT
+    public TMPro.TMP_Dropdown dayInput;
+    //private List<int> listDay = new List<int>();
+    private List<string> dayStringList30Days = new List<string>(){
+        "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
+        "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"
+    };
+    private List<string> dayStringList31Days = new List<string>(){
+        "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
+        "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"
+    };
+    private List<string> dayStringList28Days = new List<string>(){
+        "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
+        "21", "22", "23", "24", "25", "26", "27", "28"
+    };
+    private List<string> dayStringList29Days = new List<string>(){
+        "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
+        "21", "22", "23", "24", "25", "26", "27", "28","29"
+    };
+    // Validadores de las fechas
+    private bool a1;
+    private bool a2;
+    private bool a3;
+    private bool a4;
+    
+    public TMPro.TMP_Dropdown monthInput;
+    private List<int> listMonth= new List<int>();
+    private List<string> monthStringList = new List<string>();
+    
+    public TMPro.TMP_Dropdown yearInput;
+    private List<int> listYear= new List<int>();
+    private List<string> yearStringList = new List<string>();
+    
+    private string yearBisiesto;
+    private int yearBisiestoInt;
+
+    private string date;
     public void Start()
     {
         if (string.IsNullOrEmpty(PlayFabSettings.TitleId))
         { 
 
             PlayFabSettings.TitleId = "2A8BF"; // Please change this value to your own titleId from PlayFab Game Manager 
-            nameInput2.text = "";
+            //nameInput2.text = "";
 
         }
+        dayInput.ClearOptions();
+        RellenarDias();
+        RellenarMes();
+        RellenarAños();
+        
     }
-    
+
+   
+
     public void RegisterButton()
     {
         
-        if (userInput.text.Trim()==""|| emailInput.text.Trim()=="" || passwordInput.text.Trim()=="" || birthdayInput.text.Trim()==""||nameInput2.text=="")
+        
+        date = string.Format("{0}/{1}/{2}", dayInput.captionText.text, monthInput.captionText.text,
+            yearInput.captionText.text);
+        message.text = "Cargando...";
+        if (userInput.text.Trim()==""|| emailInput.text.Trim()=="" || passwordInput.text.Trim()=="" ||nameInput2.text=="")
         {
             message.text = "LLene todos los campos requeridos";
             return;
@@ -50,15 +98,6 @@ public class PlayFabRegister : MonoBehaviour
             message.text = "El nombre de el usuario debe ser mínimo de 4 y máximo de 100 carácteres";
             return;
         }
-        if (!regex.IsMatch(birthdayInput.text.Trim()))
-        {
-            
-            message.text = "Formato ingresado no válido";
-            return;
-        }
-
-        
-       
         var request = new RegisterPlayFabUserRequest
         {
             Username = userInput.text,
@@ -102,7 +141,8 @@ public class PlayFabRegister : MonoBehaviour
         {
             Data = new Dictionary<string,string>
             {
-                {"Fecha de nacimiento", birthdayInput.text}
+                {"Fecha de nacimiento", date},
+                {"Nombre", nameInput2.text}
             }
             
         };
@@ -126,16 +166,165 @@ public class PlayFabRegister : MonoBehaviour
             case PlayFabErrorCode.EmailAddressNotAvailable:
                 message.text = "El correo ya se encuentra registrado";
                 break;
+            case PlayFabErrorCode.UsernameNotAvailable:
+                message.text = "El nombre de usuario ya está siendo utilizado por otro";
+                break;
             default:
-
                 //Debug.Log(error);
                 message.text = error.ErrorMessage;
                 break;
             
         }
-
-        
     }
 
+    public void RellenarDias()
+    {
+        
+        yearBisiesto = yearInput.captionText.text;
+        if (monthInput.captionText.text=="4" || monthInput.captionText.text=="6" || monthInput.captionText.text=="9" || monthInput.captionText.text=="11")
+        {
+            if (a1)
+            {
+                // NO SE AGREGA DE NUEVO EL CONTENIDO
+            }
+            else
+            {
+                // busca el valor seleccionado anteriormente
+                string text2 = dayInput.captionText.text;
+                if (text2=="31")
+                {
+                    text2 = "30";
+                }
+                // se limpia el dropdown
+                dayInput.ClearOptions();
+                // Rellenar todos los 30 dias 
+                dayInput.AddOptions(dayStringList30Days);
+                // se asigna el valor seleccionado anteriormente en el nuevo dropdown
+                dayInput.value = dayInput.options.FindIndex(options => options.text == text2);
+                // Se valida si el mes que se selecciona tiene tambien 30 días ya no vuelva a agregarse los dias
+                a1 = true;
+                a2 = false;
+                a3 = false;
+                a4 = false;
+            }
+            
+        }
+        else if (monthInput.captionText.text == "2")
+        {
+            yearBisiestoInt= Int32.Parse(yearBisiesto);
+            if ( (yearBisiestoInt % 4 == 0 && yearBisiestoInt % 100 !=0) || yearBisiestoInt % 400 == 0)
+            {
+                if (a3)
+                {
+                    // NO SE AGREGA DE NUEVO EL CONTENIDO
+                }
+                else
+                {
+                    // busca el valor seleccionado anteriormente
+                    string text3 = dayInput.captionText.text;
+                    if (text3=="31" || text3=="30")
+                    {
+                        text3 = "29";
+                    }
+                    // se limpia el dropdown
+                    dayInput.ClearOptions();
+                    // se agrega los 29 días 
+                    dayInput.AddOptions(dayStringList29Days);
+                    // se asigna el valor seleccionado anteriormente en el nuevo dropdown
+                    dayInput.value = dayInput.options.FindIndex(options => options.text == text3);
+                    // Se valida si el año es bisiesto y ya no vuelva a agregarse de nuevo
+                    a1 = false;
+                    a2 = false;
+                    a4 = false;
+                    a3 = true;
+                }
+                
+            }
+            else
+            {
+                if (a4)
+                {
+                    // NO SE AGREGA DE NUEVO EL CONTENIDO
+                }
+                else
+                {
+                    // busca el valor seleccionado anteriormente
+                    string text4 = dayInput.captionText.text;
+                    if (text4=="30" || text4=="31" || text4=="29")
+                    {
+                        text4 = "28";
+                    }
+                    // se limpia el dropdown
+                    dayInput.ClearOptions();
+                    // se agrega los 28 días 
+                    dayInput.AddOptions(dayStringList28Days);    
+                    // se asigna el valor seleccionado anteriormente en el nuevo dropdown
+                    dayInput.value = dayInput.options.FindIndex(options => options.text == text4);
+                    // Se valida si el año no es bisiesto y ya no vuelva a agregarse de nuevo
+                    a4 = true;
+                    a3 = false;
+                    a2 = false;
+                    a1 = false;
+                }
+            }
+        }
+        else
+        {
+            
+            if (a2)
+            {
+                // NO SE AGREGA DE NUEVO EL CONTENIDO
+            }
+            else
+            {
+                // busca el valor seleccionado anteriormente
+                string text1 = dayInput.captionText.text;
+                // se limpia el dropdown
+                dayInput.ClearOptions();
+                // Rellenar todos los 31 dias
+                dayInput.AddOptions(dayStringList31Days);
+                // se asigna el valor seleccionado anteriormente en el nuevo dropdown
+                dayInput.value = dayInput.options.FindIndex(options => options.text == text1);
+                // Se valida si el mes que se selecciona tiene tambien 31 días ya no vuelva a agregarse los dias
+                a2 = true;
+                a1 = false;
+                a3 = false;
+                a4 = false;
+            }
+                
+        }
+        
+    }    
+    
+    public void RellenarMes()
+    {
+        monthInput.ClearOptions();
+        // Rellenar todos los meses
+        // Comenzamos desde 1 hasta 12
+        for (int i = 1; i <= 12; i++)
+        {
+            listMonth.Add(i);
+        }
+        
+        monthStringList = listMonth.ConvertAll<string>(x=>x.ToString());
+        monthInput.AddOptions(monthStringList);
+        
+    }    
+    
+    public void RellenarAños()
+    {
+        yearInput.ClearOptions();
+        // Rellenar todos los años
+        // Comenzamos desde 1940 hasta el año actual
+        for (int i = 1940; i <= DateTime.Today.Year; i++)
+        {
+            listYear.Add(i);
+        }
+        
+        yearStringList = listYear.ConvertAll<string>(x=>x.ToString());
+        //yearStringList = new List<string>(){"adad","baba"};
+        yearInput.AddOptions(yearStringList);
+    }    
+    
    
 }
