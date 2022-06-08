@@ -249,7 +249,7 @@ public class PlayerController : MonoBehaviour
                 precision = (contadorAciertos / contadorTotal);
 
                 //Guardado de resultado
-                ResultsManager.instance.AddResult(System.DateTime.Now.ToString(), 0, 0,(int)Puntaje.puntaje.puntos, (int)TimeController.timeController.restante, precision);
+                ResultsManager.instance.AddResult(System.DateTime.Now.ToString("MM/dd\nH:mm"), 0, 0,(int)Puntaje.puntaje.puntos, (int)TimeController.timeController.restante, precision);
 
                 // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
                 TimeController.timeController.IsGameOver();
@@ -283,7 +283,7 @@ public class PlayerController : MonoBehaviour
                 precision = (contadorAciertos / contadorTotal);
 
                 //Guardado de resultado
-                ResultsManager.instance.AddResult(System.DateTime.Now.ToString(), 0, 0, (int)Puntaje.puntaje.puntos, (int)TimeController.timeController.restante, precision);
+                ResultsManager.instance.AddResult(System.DateTime.Now.ToString("MM/dd\nH:mm"), 0, 0, (int)Puntaje.puntaje.puntos, (int)TimeController.timeController.restante, precision);
 
                 // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
                 TimeController.timeController.IsGameOver();
@@ -316,7 +316,7 @@ public class PlayerController : MonoBehaviour
                 precision = (contadorAciertos / contadorTotal);
 
                 //Guardado de resultado
-                ResultsManager.instance.AddResult(System.DateTime.Now.ToString(), 0, 0, (int)Puntaje.puntaje.puntos, (int)TimeController.timeController.restante, precision);
+                ResultsManager.instance.AddResult(System.DateTime.Now.ToString("MM/dd\nH:mm"), 0, 0, (int)Puntaje.puntaje.puntos, (int)TimeController.timeController.restante, precision);
 
                 // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
                 TimeController.timeController.IsGameOver();
@@ -350,7 +350,7 @@ public class PlayerController : MonoBehaviour
                 precision = (contadorAciertos / contadorTotal);
 
                 //Guardado de resultado
-                ResultsManager.instance.AddResult(System.DateTime.Now.ToString(), 0, 0, (int)Puntaje.puntaje.puntos, (int)TimeController.timeController.restante, precision);
+                ResultsManager.instance.AddResult(System.DateTime.Now.ToString("MM/dd\nH:mm"), 0, 0, (int)Puntaje.puntaje.puntos, (int)TimeController.timeController.restante, precision);
 
                 // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
                 TimeController.timeController.IsGameOver();
@@ -383,7 +383,7 @@ public class PlayerController : MonoBehaviour
                 precision = (contadorAciertos / contadorTotal);
 
                 //Guardado de resultado
-                ResultsManager.instance.AddResult(System.DateTime.Now.ToString(), 0, 0, (int)Puntaje.puntaje.puntos, (int)TimeController.timeController.restante, precision);
+                ResultsManager.instance.AddResult(System.DateTime.Now.ToString("MM/dd\nH:mm"), 0, 0, (int)Puntaje.puntaje.puntos, (int)TimeController.timeController.restante, precision);
 
                 // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
                 TimeController.timeController.IsGameOver();
@@ -416,7 +416,7 @@ public class PlayerController : MonoBehaviour
                 precision = (contadorAciertos / contadorTotal);
 
                 //Guardado de resultado
-                ResultsManager.instance.AddResult(System.DateTime.Now.ToString(), 0, 0, (int)Puntaje.puntaje.puntos, (int)TimeController.timeController.restante, precision);
+                ResultsManager.instance.AddResult(System.DateTime.Now.ToString("MM/dd\nH:mm"), 0, 0, (int)Puntaje.puntaje.puntos, (int)TimeController.timeController.restante, precision);
 
                 // TODO: APAGAR TODO EL SISTEMA DE CONTEO, PUNTAJE Y CONTADORES
                 TimeController.timeController.IsGameOver();

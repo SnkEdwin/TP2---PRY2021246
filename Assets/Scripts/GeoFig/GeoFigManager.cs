@@ -215,7 +215,7 @@ public class GeoFigManager : MonoBehaviour
         TimeSpan time = TimeSpan.FromSeconds(timeSpend);
         timeText.text = string.Format("{0:00}:{1:00}", time.TotalMinutes, time.Seconds);
 
-        ResultsManager.instance.AddResult(System.DateTime.Now.ToString(),2,dificulty,
+        ResultsManager.instance.AddResult(System.DateTime.Now.ToString("MM/dd\nH:mm"),2,dificulty,
             currentScore,(int) timeSpend,CalculateAccuracy());
     }
     

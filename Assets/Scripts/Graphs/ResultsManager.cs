@@ -104,7 +104,7 @@ public class ResultsManager : MonoBehaviour
             int randomPuntaje = Random.Range(0, 1000);
             int randomTiempo = Random.Range(0, 200);
             float randomPrecision = Random.Range(0, 1f);
-            AddResult(System.DateTime.Now.ToString(),randomMinijuego, randomDificultad, randomPuntaje, randomTiempo, randomPrecision);
+            AddResult(System.DateTime.Now.ToString("MM/dd\nH:mm"),randomMinijuego, randomDificultad, randomPuntaje, randomTiempo, randomPrecision);
         }
 
         

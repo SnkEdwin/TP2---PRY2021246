@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class GraphManager : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class GraphManager : MonoBehaviour
 
     public List<string> labelsX;
     public List<string> labelsY;
+
+    public Color graphColor;
+    public Color pointColor;
 
     void Start()
     {
@@ -159,7 +163,8 @@ public class GraphManager : MonoBehaviour
             pointValueText.SetParent(graphContainer);
             pointValueText.gameObject.SetActive(true);
             pointValueText.anchoredPosition = new Vector2(xPosition, yPosition);
-            pointValueText.GetComponent<TextMeshProUGUI>().text = valueList[i].ToString();
+            TimeSpan time = TimeSpan.FromSeconds(valueList[i]);
+            pointValueText.GetComponent<TextMeshProUGUI>().text = string.Format("{0:00}:{1:00}", time.TotalMinutes, time.Seconds);
 
 
             RectTransform labelX = Instantiate(labelTemplateX);
@@ -186,6 +191,7 @@ public class GraphManager : MonoBehaviour
         float graphWidth = graphContainer.sizeDelta.x;
         float yMaximum = 1f;
         float yMinimum = 0f;
+        int nLabels = 5;
 
         float xSize = graphWidth / (valueList.Count + 1);
 
@@ -196,6 +202,7 @@ public class GraphManager : MonoBehaviour
             float xPosition = xSize + i * xSize;
             float yPosition = ((valueList[i] - yMinimum) / (yMaximum - yMinimum)) * graphHeight;
             GameObject circleGameObject = CreateCircle(new Vector2(xPosition, yPosition));
+            circleGameObject.GetComponent<Image>().color = pointColor;
 
             if (previousCircle != null)
             {
@@ -222,12 +229,12 @@ public class GraphManager : MonoBehaviour
             labelX.GetComponent<TextMeshProUGUI>().text = labelsX[i];
         }
 
-        for (int i = 0; i <= 10; i++)
+        for (int i = 0; i <= nLabels; i++)
         {
             RectTransform labelY = Instantiate(labelTemplateY);
             labelY.SetParent(graphContainer);
             labelY.gameObject.SetActive(true);
-            float normalizedValue = i * 1f / 10;
+            float normalizedValue = i * 1f / nLabels;
             labelY.anchoredPosition = new Vector2(-20f, normalizedValue * graphHeight);
             labelY.GetComponent<TextMeshProUGUI>().text = (normalizedValue*100).ToString() + "%";
         }
@@ -236,8 +243,8 @@ public class GraphManager : MonoBehaviour
     private void CreateDotConnection(Vector2 posA, Vector2 posB)
     {
         GameObject connection = new GameObject("Connection", typeof(Image));
-        connection.transform.SetParent(graphContainer, false); 
-        connection.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+        connection.transform.SetParent(graphContainer, false);
+        connection.GetComponent<Image>().color = graphColor;
         
         RectTransform rectTransform = connection.GetComponent<RectTransform>();
         Vector2 dir = (posB - posA).normalized;
@@ -247,6 +254,8 @@ public class GraphManager : MonoBehaviour
         rectTransform.anchorMax = new Vector2(0, 0);
         rectTransform.sizeDelta = new Vector2(distance, 3f);
         rectTransform.anchoredPosition = posA + dir * distance * 0.5f;
+
+        rectTransform.transform.SetSiblingIndex(0);
 
         float rotation = Mathf.Atan2(dir.y, dir.x) * 180 / Mathf.PI;
         rectTransform.localEulerAngles = new Vector3(0, 0,rotation);
@@ -264,6 +273,7 @@ public class GraphManager : MonoBehaviour
         rectTransform.anchorMin = new Vector2(0, 0);
         rectTransform.anchorMax = new Vector2(0, 0);
         rectTransform.pivot = new Vector2(0.5f, 0);
+        rectTransform.GetComponent<Image>().color = graphColor;
 
         return bar;
     }
