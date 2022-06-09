@@ -10,11 +10,11 @@ public class ResultsManager : MonoBehaviour
     public List<Resultado> loadedResults;
     public int maxResults;
 
-    private string[] dificultadTexto = new string[] { "facil", "mediana", "dificil" };
+    private string[] dificultadTexto = new string[] { "Fácil", "Mediana", "Difícil" };
     private int dificultad = 0;
-    private string[] minijuegoTexto = new string[] { "Sucesiones", "Sumas y Restas", "Figuras Geometricas" };
+    private string[] minijuegoTexto = new string[] { "Sucesiones", "Sumas y Restas", "Figuras Geométricas" };
     private int minijuego = 0;
-    private string[] metricaTexto = new string[] { "Precision", "Tiempo" };
+    private string[] metricaTexto = new string[] { "Precisión", "Tiempo" };
     private int metrica = 0;
 
     public static ResultsManager instance;
@@ -75,6 +75,7 @@ public class ResultsManager : MonoBehaviour
         GetResults();
     }
 
+
     // Update is called once per frame
     void Update()
     {
@@ -102,7 +103,7 @@ public class ResultsManager : MonoBehaviour
             int randomMinijuego = Random.Range(0, 3);
 
             int randomPuntaje = Random.Range(0, 1000);
-            int randomTiempo = Random.Range(0, 200);
+            int randomTiempo = Random.Range(0, 120);
             float randomPrecision = Random.Range(0, 1f);
             AddResult(System.DateTime.Now.ToString("MM/dd\nH:mm"),randomMinijuego, randomDificultad, randomPuntaje, randomTiempo, randomPrecision);
         }

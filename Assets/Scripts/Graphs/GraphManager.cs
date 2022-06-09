@@ -130,15 +130,9 @@ public class GraphManager : MonoBehaviour
             {
                 yMaximum = value;
             }
-            if (value < yMinimum)
-            {
-                yMinimum = value;
-            }
         }
 
         yMaximum = yMaximum + ((yMaximum - yMinimum) * offset);
-        yMinimum = yMinimum - ((yMaximum - yMinimum));
-        
 
         //GameObject previousCircle = null;
         for (int i = 0; i < valueList.Count; i++)
@@ -147,6 +141,7 @@ public class GraphManager : MonoBehaviour
             float yPosition = ((valueList[i] - yMinimum) / (yMaximum - yMinimum)) * graphHeight;
 
             float barRelativeWidth = 0.75f;
+            Debug.Log(yPosition + " | " + graphHeight + " | " + yMinimum +  " | " + yMaximum);
             CreateBar(new Vector2(xPosition, yPosition), xSize*barRelativeWidth);
             /*
             GameObject circleGameObject = CreateCircle(new Vector2(xPosition, yPosition));
@@ -165,6 +160,7 @@ public class GraphManager : MonoBehaviour
             pointValueText.anchoredPosition = new Vector2(xPosition, yPosition);
             TimeSpan time = TimeSpan.FromSeconds(valueList[i]);
             pointValueText.GetComponent<TextMeshProUGUI>().text = string.Format("{0:00}:{1:00}", time.TotalMinutes, time.Seconds);
+            //pointValueText.GetComponent<TextMeshProUGUI>().text = valueList[i].ToString();
 
 
             RectTransform labelX = Instantiate(labelTemplateX);
